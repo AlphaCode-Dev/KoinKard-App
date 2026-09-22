@@ -5,4 +5,5 @@ class AppAssets {
   static const String onboardingcoin = 'assets/png/onboardingcoin.png';
   static const String onboardingphonebills =
       'assets/png/onboardingphonebills.png';
+  static const String giftcardshow = 'assets/png/giftcardshow.png';
 }

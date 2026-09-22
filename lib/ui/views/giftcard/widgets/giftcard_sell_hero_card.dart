@@ -80,7 +80,7 @@ class GiftcardSellHeroCard extends StatelessWidget {
                           child: _MiniGiftCard(
                             color: const Color(0xFF1D1E22),
                             child: Image.asset(
-                              AppAssets.giftcard,
+                              AppAssets.giftcardshow,
                               fit: BoxFit.contain,
                             ),
                           ),
