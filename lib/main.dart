@@ -5,6 +5,7 @@ import 'package:koinkard/app/app.bottomsheets.dart';
 import 'package:koinkard/app/app.dialogs.dart';
 import 'package:koinkard/app/app.locator.dart';
 import 'package:koinkard/app/app.router.dart';
+import 'package:koinkard/data/network/setup_api_locator.dart';
 import 'package:koinkard/ui/common/app_colors.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -24,6 +25,7 @@ Future<void> main() async {
     ),
   );
   await setupLocator();
+  await setupApiLocator();
   setupDialogUi();
   setupBottomSheetUi();
   runApp(const MainApp());

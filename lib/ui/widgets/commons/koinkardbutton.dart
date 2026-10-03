@@ -11,6 +11,7 @@ class KoinkardPrimaryButton extends StatelessWidget {
   final Color? disabledBackgroundColor;
   final Color? textColor;
   final String? icon;
+  final bool isLoading;
   final VoidCallback? onTap;
 
   const KoinkardPrimaryButton({
@@ -22,6 +23,7 @@ class KoinkardPrimaryButton extends StatelessWidget {
     this.disabledBackgroundColor,
     this.textColor,
     this.icon,
+    this.isLoading = false,
     this.onTap,
   });
 
@@ -40,20 +42,32 @@ class KoinkardPrimaryButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(30.r),
           ),
         ),
-        onPressed: onTap, // auto disabled when null
+        onPressed: isLoading ? null : onTap,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              text,
-              style: TextStyle(
-                letterSpacing: 1,
-                fontWeight: FontWeight.w600,
-                fontSize: 16.sp,
-                color: textColor ?? Colors.white,
+            if (isLoading)
+              SizedBox(
+                height: 20.h,
+                width: 20.w,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2.2,
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    textColor ?? Colors.white,
+                  ),
+                ),
+              )
+            else
+              Text(
+                text,
+                style: TextStyle(
+                  letterSpacing: 1,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16.sp,
+                  color: textColor ?? Colors.white,
+                ),
               ),
-            ),
-            if (icon != null) ...[
+            if (!isLoading && icon != null) ...[
               SizedBox(width: 8.w),
               SvgPicture.asset(
                 icon!,

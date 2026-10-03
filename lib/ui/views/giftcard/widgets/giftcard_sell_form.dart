@@ -7,6 +7,7 @@ import 'package:koinkard/ui/widgets/commons/koinkardinputfield.dart';
 class GiftcardSellForm extends StatelessWidget {
   const GiftcardSellForm({
     super.key,
+    required this.formKey,
     required this.selectedBrand,
     required this.brands,
     required this.selectedCountry,
@@ -18,8 +19,20 @@ class GiftcardSellForm extends StatelessWidget {
     required this.onBrandSelected,
     required this.onCountrySelected,
     required this.onPayoutMethodSelected,
+    required this.onAmountChanged,
+    required this.onCodeChanged,
+    required this.amountValidator,
+    required this.codeValidator,
+    required this.autovalidateMode,
+    required this.estimatedPayout,
+    required this.currentRate,
+    required this.settlementSpeed,
+    required this.instructions,
+    required this.isSubmitting,
+    required this.onSubmit,
   });
 
+  final GlobalKey<FormState> formKey;
   final String selectedBrand;
   final List<String> brands;
   final String selectedCountry;
@@ -31,6 +44,17 @@ class GiftcardSellForm extends StatelessWidget {
   final ValueChanged<String> onBrandSelected;
   final ValueChanged<String?> onCountrySelected;
   final ValueChanged<String?> onPayoutMethodSelected;
+  final ValueChanged<String> onAmountChanged;
+  final ValueChanged<String> onCodeChanged;
+  final String? Function(String?) amountValidator;
+  final String? Function(String?) codeValidator;
+  final AutovalidateMode autovalidateMode;
+  final String estimatedPayout;
+  final String currentRate;
+  final String settlementSpeed;
+  final String instructions;
+  final bool isSubmitting;
+  final VoidCallback? onSubmit;
 
   @override
   Widget build(BuildContext context) {
@@ -43,94 +67,109 @@ class GiftcardSellForm extends StatelessWidget {
           color: kWhiteColor.withValues(alpha: 0.06),
         ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Trade Details',
-            style: AppTextStyles.headingXSmall.copyWith(
-              color: kWhiteColor,
-              fontSize: 22,
+      child: Form(
+        key: formKey,
+        autovalidateMode: autovalidateMode,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Trade Details',
+              style: AppTextStyles.headingXSmall.copyWith(
+                color: kWhiteColor,
+                fontSize: 22,
+              ),
             ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Pick the card brand, amount, and payout route to estimate your cash-out value.',
-            style: AppTextStyles.bodyMedium.copyWith(
-              color: kWhiteColor.withValues(alpha: 0.58),
-              height: 1.55,
+            const SizedBox(height: 8),
+            Text(
+              'Pick the card brand, amount, and payout route to estimate your cash-out value.',
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: kWhiteColor.withValues(alpha: 0.58),
+                height: 1.55,
+              ),
             ),
-          ),
-          const SizedBox(height: 22),
-          Text(
-            'Card brand',
-            style: AppTextStyles.paragraphSmall.copyWith(
-              color: kWhiteColor,
+            const SizedBox(height: 22),
+            Text(
+              'Card brand',
+              style: AppTextStyles.paragraphSmall.copyWith(
+                color: kWhiteColor,
+              ),
             ),
-          ),
-          const SizedBox(height: 12),
-          Wrap(
-            spacing: 10,
-            runSpacing: 10,
-            children: brands
-                .map(
-                  (brand) => _BrandChip(
-                    label: brand,
-                    isSelected: brand == selectedBrand,
-                    onTap: () => onBrandSelected(brand),
+            const SizedBox(height: 12),
+            Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              children: brands
+                  .map(
+                    (brand) => _BrandChip(
+                      label: brand,
+                      isSelected: brand == selectedBrand,
+                      onTap: () => onBrandSelected(brand),
+                    ),
+                  )
+                  .toList(),
+            ),
+            const SizedBox(height: 18),
+            Row(
+              children: [
+                Expanded(
+                  child: _TradeDropdown(
+                    label: 'Country',
+                    value: selectedCountry,
+                    items: countries,
+                    onChanged: onCountrySelected,
                   ),
-                )
-                .toList(),
-          ),
-          const SizedBox(height: 18),
-          Row(
-            children: [
-              Expanded(
-                child: _TradeDropdown(
-                  label: 'Country',
-                  value: selectedCountry,
-                  items: countries,
-                  onChanged: onCountrySelected,
                 ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: _TradeDropdown(
-                  label: 'Payout',
-                  value: selectedPayoutMethod,
-                  items: payoutMethods,
-                  onChanged: onPayoutMethodSelected,
+                const SizedBox(width: 12),
+                Expanded(
+                  child: _TradeDropdown(
+                    label: 'Payout',
+                    value: selectedPayoutMethod,
+                    items: payoutMethods,
+                    onChanged: onPayoutMethodSelected,
+                  ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 18),
-          KoinkardInputField(
-            controller: amountController,
-            label: 'Card amount',
-            hintText: 'Enter card value e.g. 100',
-            keyboardType: TextInputType.number,
-            prefixIcon: Icon(
-              Icons.attach_money_rounded,
-              color: kWhiteColor.withValues(alpha: 0.76),
+              ],
             ),
-          ),
-          const SizedBox(height: 16),
-          KoinkardInputField(
-            controller: codeController,
-            label: 'Card note / code',
-            hintText: 'Add card code, receipt note, or extra detail',
-            maxLines: 3,
-            minLines: 3,
-            contentPadding: const EdgeInsets.fromLTRB(18, 18, 18, 18),
-          ),
-          const SizedBox(height: 18),
-          const _GiftcardSummaryCard(),
-          const SizedBox(height: 22),
-          const KoinkardPrimaryButton(
-            text: 'Trade Gift Cards',
-          ),
-        ],
+            const SizedBox(height: 18),
+            KoinkardInputField(
+              controller: amountController,
+              label: 'Card amount',
+              hintText: 'Enter card value e.g. 100',
+              keyboardType: TextInputType.number,
+              validator: amountValidator,
+              onChanged: onAmountChanged,
+              prefixIcon: Icon(
+                Icons.attach_money_rounded,
+                color: kWhiteColor.withValues(alpha: 0.76),
+              ),
+            ),
+            const SizedBox(height: 16),
+            KoinkardInputField(
+              controller: codeController,
+              label: 'Card code / proof reference',
+              hintText: 'Add the digital code or receipt/proof reference',
+              maxLines: 3,
+              minLines: 3,
+              validator: codeValidator,
+              onChanged: onCodeChanged,
+              contentPadding: const EdgeInsets.fromLTRB(18, 18, 18, 18),
+              helperText: instructions,
+            ),
+            const SizedBox(height: 18),
+            _GiftcardSummaryCard(
+              estimatedPayout: estimatedPayout,
+              currentRate: currentRate,
+              settlementSpeed: settlementSpeed,
+            ),
+            const SizedBox(height: 22),
+            KoinkardPrimaryButton(
+              text: 'Trade Gift Cards',
+              isLoading: isSubmitting,
+              onTap: onSubmit,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -243,7 +282,15 @@ class _TradeDropdown extends StatelessWidget {
 }
 
 class _GiftcardSummaryCard extends StatelessWidget {
-  const _GiftcardSummaryCard();
+  const _GiftcardSummaryCard({
+    required this.estimatedPayout,
+    required this.currentRate,
+    required this.settlementSpeed,
+  });
+
+  final String estimatedPayout;
+  final String currentRate;
+  final String settlementSpeed;
 
   @override
   Widget build(BuildContext context) {
@@ -262,21 +309,21 @@ class _GiftcardSummaryCard extends StatelessWidget {
         ),
       ),
       child: Column(
-        children: const [
+        children: [
           _SummaryRow(
             label: 'Estimated payout',
-            value: '92.00 USD',
+            value: '$estimatedPayout NGN',
             highlight: true,
           ),
-          SizedBox(height: 14),
+          const SizedBox(height: 14),
           _SummaryRow(
             label: 'Current rate',
-            value: '920 NGN / 1 USD',
+            value: currentRate,
           ),
-          SizedBox(height: 14),
+          const SizedBox(height: 14),
           _SummaryRow(
             label: 'Settlement speed',
-            value: 'Within 5 minutes',
+            value: settlementSpeed,
           ),
         ],
       ),
@@ -306,11 +353,14 @@ class _SummaryRow extends StatelessWidget {
           ),
         ),
         const Spacer(),
-        Text(
-          value,
-          style: AppTextStyles.paragraphMedium.copyWith(
-            color: highlight ? kOrangeColor : kWhiteColor,
-            fontWeight: FontWeight.w700,
+        Flexible(
+          child: Text(
+            value,
+            textAlign: TextAlign.end,
+            style: AppTextStyles.paragraphMedium.copyWith(
+              color: highlight ? kOrangeColor : kWhiteColor,
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ),
       ],
