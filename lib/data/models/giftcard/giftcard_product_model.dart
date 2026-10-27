@@ -25,6 +25,16 @@ class GiftcardProductModel {
 
   String get countryLabel => symbol.trim().isEmpty ? 'Global' : symbol.trim();
 
+  static String brandKey(String value) {
+    final key = value
+        .toLowerCase()
+        .replaceAll(RegExp(r'gift\s*cards?'), '')
+        .replaceAll(RegExp(r'[^a-z0-9]'), '');
+    return const ['apple', 'itunes', 'appleitunes'].contains(key)
+        ? 'appleitunes'
+        : key;
+  }
+
   double get activeRate => buyRate > 0 ? buyRate : sellRate;
 
   factory GiftcardProductModel.fromJson(Map<String, dynamic> json) {

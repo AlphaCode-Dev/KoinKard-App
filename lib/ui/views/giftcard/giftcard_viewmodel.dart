@@ -41,8 +41,13 @@ class GiftcardViewModel extends BaseViewModel {
   List<String> get brands =>
       _giftcardProducts.map((product) => product.brandLabel).toSet().toList();
 
-  List<String> get countries => _giftcardProducts
-      .where((product) => product.brandLabel == _selectedBrand)
+  List<GiftcardProductModel> get productsForSelectedBrand => _giftcardProducts
+      .where((product) =>
+          GiftcardProductModel.brandKey(product.brandLabel) ==
+          GiftcardProductModel.brandKey(selectedBrand))
+      .toList();
+
+  List<String> get countries => productsForSelectedBrand
       .map((product) => product.countryLabel)
       .toSet()
       .toList();
@@ -56,13 +61,12 @@ class GiftcardViewModel extends BaseViewModel {
   bool get hasProducts => _giftcardProducts.isNotEmpty;
 
   GiftcardProductModel? get selectedProduct {
-    for (final product in _giftcardProducts) {
-      if (product.brandLabel == _selectedBrand &&
-          product.countryLabel == _selectedCountry) {
+    for (final product in productsForSelectedBrand) {
+      if (product.countryLabel == _selectedCountry) {
         return product;
       }
     }
-    return _giftcardProducts.isEmpty ? null : _giftcardProducts.first;
+    return null;
   }
 
   String get payoutMethodValue => 'wallet';
@@ -249,12 +253,13 @@ class GiftcardViewModel extends BaseViewModel {
 
   void _syncSelections() {
     if (_giftcardProducts.isEmpty) {
-      _selectedBrand = '';
       _selectedCountry = 'Global';
       return;
     }
 
-    _selectedBrand = brands.first;
+    if (_selectedBrand.isEmpty) {
+      _selectedBrand = brands.first;
+    }
     _selectedCountry = countries.isEmpty ? 'Global' : countries.first;
   }
 
