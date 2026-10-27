@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:koinkard/ui/common/app_colors.dart';
+import 'package:koinkard/common/app_colors.dart';
 import 'package:stacked/stacked.dart';
 
 import 'screens/onboarding_bill_payment_screen.dart';
@@ -17,7 +17,7 @@ class OnboardingView extends StackedView<OnboardingViewModel> {
     Widget? child,
   ) {
     return Scaffold(
-      backgroundColor: kDarkColor,
+      backgroundColor: AppColors.background,
       body: PageView(
         controller: viewModel.pageController,
         physics: const BouncingScrollPhysics(),

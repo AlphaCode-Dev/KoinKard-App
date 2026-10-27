@@ -10,6 +10,16 @@ import 'package:stacked_services/stacked_services.dart';
 class GiftcardViewModel extends BaseViewModel {
   GiftcardViewModel();
 
+  final List<String> cardBrands = const [
+    'Chime',
+    'Apple (iTunes)',
+    'Steam',
+    'Razer Gold',
+    'Sephora',
+    'eBay',
+    'Nordstrom',
+  ];
+
   final _giftcardTradeService = locator<GiftcardTradeService>();
   final _dialogService = locator<DialogService>();
 

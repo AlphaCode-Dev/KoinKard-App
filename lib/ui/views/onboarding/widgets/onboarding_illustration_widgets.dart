@@ -1,35 +1,40 @@
+import 'package:koinkard/common/app_textstyles.dart';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:koinkard/ui/common/app_asset.dart';
+import 'package:koinkard/common/app_assets.dart';
 
-import '../../../common/app_colors.dart';
+import 'package:koinkard/common/app_colors.dart';
 
 class OnboardingIllustrationFrame extends StatelessWidget {
   const OnboardingIllustrationFrame({
     super.key,
     required this.child,
+    this.size = 330,
+    this.glowSize = 290,
   });
 
   final Widget child;
+  final double size;
+  final double glowSize;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 290,
-      height: 290,
+      width: size,
+      height: size,
       child: Stack(
         alignment: Alignment.center,
         children: [
           Container(
-            width: 250,
-            height: 250,
+            width: glowSize,
+            height: glowSize,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               gradient: RadialGradient(
                 colors: [
-                  kOrangeColor.withValues(alpha: 0.18),
-                  Colors.transparent,
+                  AppColors.primary.withValues(alpha: 0.18),
+                  AppColors.transparent,
                 ],
               ),
             ),
@@ -67,16 +72,16 @@ class OnboardingLogoCard extends StatelessWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Colors.white.withValues(alpha: 0.16),
-              Colors.white.withValues(alpha: 0.04),
+              AppColors.white.withValues(alpha: 0.16),
+              AppColors.white.withValues(alpha: 0.04),
             ],
           ),
           border: Border.all(
-            color: Colors.white.withValues(alpha: 0.10),
+            color: AppColors.white.withValues(alpha: 0.10),
           ),
           boxShadow: [
             BoxShadow(
-              color: kOrangeColor.withValues(alpha: 0.24),
+              color: AppColors.primary.withValues(alpha: 0.24),
               blurRadius: 32,
               spreadRadius: 4,
             ),
@@ -85,7 +90,7 @@ class OnboardingLogoCard extends StatelessWidget {
         child: DecoratedBox(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(22),
-            color: const Color(0xFF121212),
+            color: AppColors.headingOnLight,
           ),
           child: Padding(
             padding: const EdgeInsets.all(14),
@@ -123,14 +128,14 @@ class OnboardingOrbitChip extends StatelessWidget {
         height: size,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: backgroundColor ?? const Color(0xFF181818),
+          color: backgroundColor ?? AppColors.coinIllustrationSurface,
           border: Border.all(
-            color: kOrangeColor.withValues(alpha: 0.45),
+            color: AppColors.primary.withValues(alpha: 0.45),
             width: 1.5,
           ),
           boxShadow: [
             BoxShadow(
-              color: kOrangeColor.withValues(alpha: 0.22),
+              color: AppColors.primary.withValues(alpha: 0.22),
               blurRadius: 18,
               spreadRadius: 1,
             ),
@@ -139,11 +144,7 @@ class OnboardingOrbitChip extends StatelessWidget {
         alignment: Alignment.center,
         child: Text(
           label,
-          style: TextStyle(
-            color: textColor ?? kOrangeColor,
-            fontSize: size * 0.24,
-            fontWeight: FontWeight.w800,
-          ),
+          style: AppTextStyles.coinLabel(size: size, color: textColor),
         ),
       ),
     );
@@ -165,14 +166,14 @@ class OnboardingPortalBase extends StatelessWidget {
       height: size * 0.52,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(28),
-        color: const Color(0xFF141414),
+        color: AppColors.illustrationSurface,
         border: Border.all(
-          color: kOrangeColor.withValues(alpha: 0.6),
+          color: AppColors.primary.withValues(alpha: 0.6),
           width: 1.2,
         ),
         boxShadow: [
           BoxShadow(
-            color: kOrangeColor.withValues(alpha: 0.26),
+            color: AppColors.primary.withValues(alpha: 0.26),
             blurRadius: 24,
             spreadRadius: 1,
           ),
@@ -183,10 +184,10 @@ class OnboardingPortalBase extends StatelessWidget {
           width: size * 0.62,
           height: size * 0.18,
           decoration: BoxDecoration(
-            color: kOrangeColor.withValues(alpha: 0.16),
+            color: AppColors.primary.withValues(alpha: 0.16),
             borderRadius: BorderRadius.circular(999),
             border: Border.all(
-              color: kOrangeColor.withValues(alpha: 0.85),
+              color: AppColors.primary.withValues(alpha: 0.85),
             ),
           ),
         ),

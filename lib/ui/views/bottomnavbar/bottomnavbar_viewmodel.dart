@@ -10,10 +10,10 @@ class BottomnavbarViewModel extends BaseViewModel {
       subtitle: 'Overview of your balance, quick actions, and recent activity.',
     ),
     BottomNavItemData(
-      label: 'Asset',
-      icon: Icons.account_balance_wallet_rounded,
-      title: 'Asset',
-      subtitle: 'Track your assets, funding accounts, and current holdings.',
+      label: 'Rates',
+      icon: Icons.bar_chart_rounded,
+      title: 'Rates',
+      subtitle: 'Track live crypto rates and quick market pricing updates.',
     ),
     BottomNavItemData(
       label: 'Trade',
@@ -36,9 +36,13 @@ class BottomnavbarViewModel extends BaseViewModel {
   ];
 
   int currentIndex = 0;
+  final Set<int> _visitedTabs = {0};
+
+  bool hasVisitedTab(int index) => _visitedTabs.contains(index);
 
   void selectTab(int index) {
     if (index == currentIndex) return;
+    _visitedTabs.add(index);
     currentIndex = index;
     rebuildUi();
   }

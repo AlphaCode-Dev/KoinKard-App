@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:koinkard/ui/common/app_colors.dart';
-import 'package:koinkard/ui/common/app_textstyles.dart';
+import 'package:koinkard/common/app_colors.dart';
+import 'package:koinkard/common/app_textstyles.dart';
 
 class KoinkardOtpField extends StatefulWidget {
   const KoinkardOtpField({
@@ -91,11 +91,12 @@ class _KoinkardOtpFieldState extends State<KoinkardOtpField> {
 
   @override
   Widget build(BuildContext context) {
-    final fillColor = widget.fillColor ?? kWhiteColor.withValues(alpha: 0.06);
+    final fillColor =
+        widget.fillColor ?? AppColors.textPrimary.withValues(alpha: 0.06);
     final borderColor =
-        widget.borderColor ?? kWhiteColor.withValues(alpha: 0.14);
+        widget.borderColor ?? AppColors.textPrimary.withValues(alpha: 0.14);
     final activeBorderColor =
-        widget.activeBorderColor ?? kOrangeColor.withValues(alpha: 0.85);
+        widget.activeBorderColor ?? AppColors.primary.withValues(alpha: 0.85);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,7 +105,7 @@ class _KoinkardOtpFieldState extends State<KoinkardOtpField> {
           Text(
             widget.label!,
             style: AppTextStyles.paragraphSmall.copyWith(
-              color: kWhiteColor,
+              color: AppColors.textPrimary,
             ),
           ),
           SizedBox(height: 8.h),
@@ -137,8 +138,8 @@ class _KoinkardOtpFieldState extends State<KoinkardOtpField> {
             widget.errorText ?? widget.helperText ?? '',
             style: AppTextStyles.labelXSmall.copyWith(
               color: widget.errorText != null
-                  ? Colors.red.shade300
-                  : kWhiteColor.withValues(alpha: 0.58),
+                  ? AppColors.inputError
+                  : AppColors.textPrimary.withValues(alpha: 0.58),
             ),
           ),
         ],
@@ -245,7 +246,7 @@ class _OtpCell extends StatelessWidget {
         textInputAction: TextInputAction.next,
         obscureText: obscureText,
         style: AppTextStyles.headingXSmall.copyWith(
-          color: kWhiteColor,
+          color: AppColors.textPrimary,
         ),
         inputFormatters: [
           FilteringTextInputFormatter.digitsOnly,

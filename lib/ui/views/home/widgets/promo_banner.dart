@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:koinkard/ui/common/app_colors.dart';
-import 'package:koinkard/ui/common/app_textstyles.dart';
+import 'package:koinkard/common/app_colors.dart';
+import 'package:koinkard/common/app_textstyles.dart';
 
 class PromoBanner extends StatelessWidget {
   const PromoBanner({super.key});
@@ -15,8 +15,8 @@ class PromoBanner extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Color(0xFF191715),
-            Color(0xFF111214),
+            AppColors.promoGradientStart,
+            AppColors.elevatedSurface,
           ],
         ),
       ),
@@ -29,15 +29,15 @@ class PromoBanner extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               gradient: const RadialGradient(
                 colors: [
-                  Color(0xFFFFB36A),
-                  Color(0xFF45240B),
-                  Colors.transparent,
+                  AppColors.promoAccent,
+                  AppColors.promoGradientEnd,
+                  AppColors.transparent,
                 ],
               ),
             ),
             child: const Icon(
               Icons.public_rounded,
-              color: kWhiteColor,
+              color: AppColors.textPrimary,
               size: 34,
             ),
           ),
@@ -49,16 +49,14 @@ class PromoBanner extends StatelessWidget {
                 Text(
                   'Events',
                   style: AppTextStyles.bodyMedium.copyWith(
-                    color: kWhiteColor.withValues(alpha: 0.42),
+                    color: AppColors.textPrimary.withValues(alpha: 0.42),
                   ),
                 ),
                 const SizedBox(height: 10),
                 Text(
                   'KoinKard Galaxy: trade more, earn more.',
-                  style: AppTextStyles.paragraphLarge.copyWith(
-                    color: kWhiteColor,
-                    height: 1.4,
-                  ),
+                  style: AppTextStyles.promoTitle
+                      .copyWith(color: AppColors.textPrimary),
                 ),
               ],
             ),
@@ -66,13 +64,13 @@ class PromoBanner extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
             decoration: BoxDecoration(
-              color: kWhiteColor.withValues(alpha: 0.08),
+              color: AppColors.textPrimary.withValues(alpha: 0.08),
               borderRadius: BorderRadius.circular(999),
             ),
             child: Text(
               '5/5',
               style: AppTextStyles.labelXSmall.copyWith(
-                color: kWhiteColor.withValues(alpha: 0.82),
+                color: AppColors.textPrimary.withValues(alpha: 0.82),
               ),
             ),
           ),

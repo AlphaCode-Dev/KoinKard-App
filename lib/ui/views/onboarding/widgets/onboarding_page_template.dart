@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:koinkard/ui/common/app_asset.dart';
-import 'package:koinkard/ui/common/app_textstyles.dart';
+import 'package:koinkard/common/app_assets.dart';
+import 'package:koinkard/common/app_textstyles.dart';
 import 'package:koinkard/ui/widgets/commons/koinkardbutton.dart';
 
-import '../../../common/app_colors.dart';
+import 'package:koinkard/common/app_colors.dart';
 import 'onboarding_background.dart';
 import 'onboarding_page_indicator.dart';
 
@@ -66,7 +66,7 @@ class OnboardingPageTemplate extends StatelessWidget {
                             child: Text(
                               'Skip',
                               style: AppTextStyles.paragraphSmall.copyWith(
-                                color: kOrangeColor,
+                                color: AppColors.primary,
                               ),
                             ),
                           )
@@ -80,10 +80,8 @@ class OnboardingPageTemplate extends StatelessWidget {
                     Text(
                       title,
                       textAlign: TextAlign.center,
-                      style: AppTextStyles.headingLarge.copyWith(
-                        color: kWhiteColor,
-                        height: 1.12,
-                      ),
+                      style: AppTextStyles.onboardingHeading
+                          .copyWith(color: AppColors.textPrimary),
                     ),
                     const SizedBox(height: 16),
                     Padding(
@@ -91,10 +89,9 @@ class OnboardingPageTemplate extends StatelessWidget {
                       child: Text(
                         description,
                         textAlign: TextAlign.center,
-                        style: AppTextStyles.bodyMedium.copyWith(
-                          color: kWhiteColor.withValues(alpha: 0.72),
-                          height: 1.65,
-                        ),
+                        style: AppTextStyles.bodyDescription.copyWith(
+                            color:
+                                AppColors.textPrimary.withValues(alpha: 0.72)),
                       ),
                     ),
                     const Spacer(),
@@ -106,8 +103,8 @@ class OnboardingPageTemplate extends StatelessWidget {
                     KoinkardPrimaryButton(
                       text: buttonLabel,
                       height: 56,
-                      backgroundColor: kOrangeColor,
-                      textColor: kDarkColor,
+                      backgroundColor: AppColors.primary,
+                      textColor: AppColors.background,
                       onTap: onPrimaryTap,
                     ),
                     const SizedBox(height: 12),

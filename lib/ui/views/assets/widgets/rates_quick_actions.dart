@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:koinkard/ui/common/app_colors.dart';
-import 'package:koinkard/ui/common/app_textstyles.dart';
+import 'package:koinkard/common/app_colors.dart';
+import 'package:koinkard/common/app_textstyles.dart';
 
-class AssetsQuickActions extends StatelessWidget {
-  const AssetsQuickActions({super.key});
+class RatesQuickActions extends StatelessWidget {
+  const RatesQuickActions({super.key});
 
   static const _actions = [
     _AssetActionData(
@@ -59,11 +59,15 @@ class _AssetActionItem extends StatelessWidget {
           height: 56,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: action.highlighted ? kOrangeColor : const Color(0xFF17191D),
+            color: action.highlighted
+                ? AppColors.primary
+                : AppColors.actionSurface,
           ),
           child: Icon(
             action.icon,
-            color: action.highlighted ? kDarkColor : kWhiteColor,
+            color: action.highlighted
+                ? AppColors.background
+                : AppColors.textPrimary,
             size: 26,
           ),
         ),
@@ -71,10 +75,8 @@ class _AssetActionItem extends StatelessWidget {
         Text(
           action.label,
           textAlign: TextAlign.center,
-          style: AppTextStyles.paragraphSmall.copyWith(
-            color: kWhiteColor,
-            fontWeight: FontWeight.w500,
-          ),
+          style: AppTextStyles.paragraphSmallMedium
+              .copyWith(color: AppColors.textPrimary),
         ),
       ],
     );

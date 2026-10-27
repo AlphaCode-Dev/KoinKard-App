@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:koinkard/ui/common/app_colors.dart';
-import 'package:koinkard/ui/common/app_textstyles.dart';
+import 'package:koinkard/common/app_colors.dart';
+import 'package:koinkard/common/app_textstyles.dart';
 import 'package:koinkard/ui/views/profile/profile_viewmodel.dart';
 
 class UserCenterTabs extends StatelessWidget {
@@ -53,18 +53,17 @@ class _TabItem extends StatelessWidget {
         children: [
           Text(
             label,
-            style: AppTextStyles.paragraphLarge.copyWith(
-              color:
-                  isActive ? kWhiteColor : kWhiteColor.withValues(alpha: 0.28),
-              fontWeight: isActive ? FontWeight.w700 : FontWeight.w500,
-            ),
+            style: AppTextStyles.profileTab(active: isActive).copyWith(
+                color: isActive
+                    ? AppColors.textPrimary
+                    : AppColors.textPrimary.withValues(alpha: 0.28)),
           ),
           const SizedBox(height: 10),
           AnimatedContainer(
             duration: const Duration(milliseconds: 180),
             width: 78,
             height: 3,
-            color: isActive ? kWhiteColor : Colors.transparent,
+            color: isActive ? AppColors.textPrimary : AppColors.transparent,
           ),
         ],
       ),

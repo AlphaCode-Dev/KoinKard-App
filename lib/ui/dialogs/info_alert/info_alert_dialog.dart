@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:koinkard/ui/common/app_colors.dart';
-import 'package:koinkard/ui/common/app_textstyles.dart';
+import 'package:koinkard/common/app_colors.dart';
+import 'package:koinkard/common/app_textstyles.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -32,19 +32,19 @@ class InfoAlertDialog extends StackedView<InfoAlertDialogModel> {
     final isError = viewModel.isErrorTone(title, description);
 
     return Dialog(
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppColors.transparent,
       insetPadding: EdgeInsets.symmetric(horizontal: 24.w),
       child: Container(
         padding: EdgeInsets.all(24.w),
         decoration: BoxDecoration(
-          color: const Color(0xFF0D0F0F),
+          color: AppColors.authSurface,
           borderRadius: BorderRadius.circular(28.r),
           border: Border.all(
-            color: kWhiteColor.withValues(alpha: 0.08),
+            color: AppColors.textPrimary.withValues(alpha: 0.08),
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.35),
+              color: AppColors.background.withValues(alpha: 0.35),
               blurRadius: 32,
               offset: const Offset(0, 18),
             ),
@@ -62,18 +62,18 @@ class InfoAlertDialog extends StackedView<InfoAlertDialogModel> {
                   height: 56.w,
                   decoration: BoxDecoration(
                     color: isError
-                        ? const Color(0xFF311416)
-                        : kOrangeColor.withValues(alpha: 0.16),
+                        ? AppColors.errorSurface
+                        : AppColors.primary.withValues(alpha: 0.16),
                     borderRadius: BorderRadius.circular(18.r),
                     border: Border.all(
                       color: isError
-                          ? const Color(0xFFB8515A)
-                          : kOrangeColor.withValues(alpha: 0.45),
+                          ? AppColors.errorBorder
+                          : AppColors.primary.withValues(alpha: 0.45),
                     ),
                   ),
                   child: Icon(
                     isError ? Icons.error_outline_rounded : Icons.info_outline,
-                    color: isError ? const Color(0xFFFF8A94) : kOrangeColor,
+                    color: isError ? AppColors.errorText : AppColors.primary,
                     size: 28.sp,
                   ),
                 ),
@@ -84,18 +84,15 @@ class InfoAlertDialog extends StackedView<InfoAlertDialogModel> {
                     children: [
                       Text(
                         title,
-                        style: AppTextStyles.titleMedium.copyWith(
-                          color: kWhiteColor,
-                          fontSize: 20.sp,
-                        ),
+                        style: AppTextStyles.dialogTitle
+                            .copyWith(color: AppColors.textPrimary),
                       ),
                       SizedBox(height: 8.h),
                       Text(
                         description,
-                        style: AppTextStyles.bodyMedium.copyWith(
-                          color: kWhiteColor.withValues(alpha: 0.72),
-                          height: 1.6,
-                        ),
+                        style: AppTextStyles.bodyMessage.copyWith(
+                            color:
+                                AppColors.textPrimary.withValues(alpha: 0.72)),
                       ),
                     ],
                   ),
@@ -109,8 +106,8 @@ class InfoAlertDialog extends StackedView<InfoAlertDialogModel> {
               child: ElevatedButton(
                 onPressed: () => completer(DialogResponse(confirmed: true)),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: kOrangeColor,
-                  foregroundColor: kDarkColor,
+                  backgroundColor: AppColors.primary,
+                  foregroundColor: AppColors.background,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18.r),
@@ -118,10 +115,8 @@ class InfoAlertDialog extends StackedView<InfoAlertDialogModel> {
                 ),
                 child: Text(
                   isError ? 'Try Again' : 'Continue',
-                  style: AppTextStyles.paragraphMedium.copyWith(
-                    color: kDarkColor,
-                    fontWeight: FontWeight.w700,
-                  ),
+                  style: AppTextStyles.paragraphMediumBold
+                      .copyWith(color: AppColors.background),
                 ),
               ),
             ),

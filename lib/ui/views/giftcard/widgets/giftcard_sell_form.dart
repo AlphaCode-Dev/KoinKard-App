@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:koinkard/ui/common/app_colors.dart';
-import 'package:koinkard/ui/common/app_textstyles.dart';
+import 'package:koinkard/common/app_colors.dart';
+import 'package:koinkard/common/app_textstyles.dart';
 import 'package:koinkard/ui/widgets/commons/koinkardbutton.dart';
 import 'package:koinkard/ui/widgets/commons/koinkardinputfield.dart';
 
@@ -62,9 +62,9 @@ class GiftcardSellForm extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
-        color: const Color(0xFF101112),
+        color: AppColors.cardSurface,
         border: Border.all(
-          color: kWhiteColor.withValues(alpha: 0.06),
+          color: AppColors.textPrimary.withValues(alpha: 0.06),
         ),
       ),
       child: Form(
@@ -75,24 +75,20 @@ class GiftcardSellForm extends StatelessWidget {
           children: [
             Text(
               'Trade Details',
-              style: AppTextStyles.headingXSmall.copyWith(
-                color: kWhiteColor,
-                fontSize: 22,
-              ),
+              style: AppTextStyles.cardHeading
+                  .copyWith(color: AppColors.textPrimary),
             ),
             const SizedBox(height: 8),
             Text(
               'Pick the card brand, amount, and payout route to estimate your cash-out value.',
-              style: AppTextStyles.bodyMedium.copyWith(
-                color: kWhiteColor.withValues(alpha: 0.58),
-                height: 1.55,
-              ),
+              style: AppTextStyles.sectionDescription.copyWith(
+                  color: AppColors.textPrimary.withValues(alpha: 0.58)),
             ),
             const SizedBox(height: 22),
             Text(
               'Card brand',
               style: AppTextStyles.paragraphSmall.copyWith(
-                color: kWhiteColor,
+                color: AppColors.textPrimary,
               ),
             ),
             const SizedBox(height: 12),
@@ -141,7 +137,7 @@ class GiftcardSellForm extends StatelessWidget {
               onChanged: onAmountChanged,
               prefixIcon: Icon(
                 Icons.attach_money_rounded,
-                color: kWhiteColor.withValues(alpha: 0.76),
+                color: AppColors.textPrimary.withValues(alpha: 0.76),
               ),
             ),
             const SizedBox(height: 16),
@@ -196,19 +192,20 @@ class _BrandChip extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           color: isSelected
-              ? kOrangeColor.withValues(alpha: 0.16)
-              : kWhiteColor.withValues(alpha: 0.04),
+              ? AppColors.primary.withValues(alpha: 0.16)
+              : AppColors.textPrimary.withValues(alpha: 0.04),
           border: Border.all(
             color: isSelected
-                ? kOrangeColor.withValues(alpha: 0.58)
-                : kWhiteColor.withValues(alpha: 0.08),
+                ? AppColors.primary.withValues(alpha: 0.58)
+                : AppColors.textPrimary.withValues(alpha: 0.08),
           ),
         ),
         child: Text(
           label,
           style: AppTextStyles.paragraphSmall.copyWith(
-            color:
-                isSelected ? kWhiteColor : kWhiteColor.withValues(alpha: 0.7),
+            color: isSelected
+                ? AppColors.textPrimary
+                : AppColors.textPrimary.withValues(alpha: 0.7),
           ),
         ),
       ),
@@ -237,7 +234,7 @@ class _TradeDropdown extends StatelessWidget {
         Text(
           label,
           style: AppTextStyles.paragraphSmall.copyWith(
-            color: kWhiteColor,
+            color: AppColors.textPrimary,
           ),
         ),
         const SizedBox(height: 8),
@@ -246,23 +243,23 @@ class _TradeDropdown extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 14),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(18),
-            color: kWhiteColor.withValues(alpha: 0.06),
+            color: AppColors.textPrimary.withValues(alpha: 0.06),
             border: Border.all(
-              color: kWhiteColor.withValues(alpha: 0.1),
+              color: AppColors.textPrimary.withValues(alpha: 0.1),
             ),
           ),
           child: DropdownButtonHideUnderline(
             child: DropdownButton<String>(
               value: value,
               isExpanded: true,
-              dropdownColor: const Color(0xFF17191D),
+              dropdownColor: AppColors.actionSurface,
               borderRadius: BorderRadius.circular(16),
               icon: Icon(
                 Icons.keyboard_arrow_down_rounded,
-                color: kWhiteColor.withValues(alpha: 0.72),
+                color: AppColors.textPrimary.withValues(alpha: 0.72),
               ),
               style: AppTextStyles.bodyMedium.copyWith(
-                color: kWhiteColor,
+                color: AppColors.textPrimary,
               ),
               onChanged: onChanged,
               items: items
@@ -303,8 +300,8 @@ class _GiftcardSummaryCard extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            kOrangeColor.withValues(alpha: 0.16),
-            kWhiteColor.withValues(alpha: 0.05),
+            AppColors.primary.withValues(alpha: 0.16),
+            AppColors.textPrimary.withValues(alpha: 0.05),
           ],
         ),
       ),
@@ -349,7 +346,7 @@ class _SummaryRow extends StatelessWidget {
         Text(
           label,
           style: AppTextStyles.bodyMedium.copyWith(
-            color: kWhiteColor.withValues(alpha: 0.6),
+            color: AppColors.textPrimary.withValues(alpha: 0.6),
           ),
         ),
         const Spacer(),
@@ -357,10 +354,8 @@ class _SummaryRow extends StatelessWidget {
           child: Text(
             value,
             textAlign: TextAlign.end,
-            style: AppTextStyles.paragraphMedium.copyWith(
-              color: highlight ? kOrangeColor : kWhiteColor,
-              fontWeight: FontWeight.w700,
-            ),
+            style: AppTextStyles.paragraphMediumBold.copyWith(
+                color: highlight ? AppColors.primary : AppColors.textPrimary),
           ),
         ),
       ],

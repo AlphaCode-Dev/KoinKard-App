@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:koinkard/ui/common/app_colors.dart';
-import 'package:koinkard/ui/common/app_textstyles.dart';
+import 'package:koinkard/common/app_colors.dart';
+import 'package:koinkard/common/app_textstyles.dart';
 
 class MarketSnapshotCard extends StatelessWidget {
   const MarketSnapshotCard({super.key});
@@ -14,7 +14,7 @@ class MarketSnapshotCard extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(18, 18, 18, 8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(28),
-        color: const Color(0xFF111214),
+        color: AppColors.elevatedSurface,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,12 +76,10 @@ class _MarketTabsRow extends StatelessWidget {
             padding: const EdgeInsets.only(right: 22),
             child: Text(
               tab,
-              style: AppTextStyles.paragraphMedium.copyWith(
-                color: isActive
-                    ? kWhiteColor
-                    : kWhiteColor.withValues(alpha: 0.34),
-                fontWeight: isActive ? FontWeight.w700 : FontWeight.w500,
-              ),
+              style: AppTextStyles.marketTab(active: isActive).copyWith(
+                  color: isActive
+                      ? AppColors.textPrimary
+                      : AppColors.textPrimary.withValues(alpha: 0.34)),
             ),
           );
         }).toList(),
@@ -107,16 +105,16 @@ class _SegmentTabsRow extends StatelessWidget {
             ),
             decoration: BoxDecoration(
               color: isActive
-                  ? kWhiteColor.withValues(alpha: 0.08)
-                  : Colors.transparent,
+                  ? AppColors.textPrimary.withValues(alpha: 0.08)
+                  : AppColors.transparent,
               borderRadius: BorderRadius.circular(16),
             ),
             child: Text(
               tab,
               style: AppTextStyles.paragraphSmall.copyWith(
                 color: isActive
-                    ? kWhiteColor
-                    : kWhiteColor.withValues(alpha: 0.34),
+                    ? AppColors.textPrimary
+                    : AppColors.textPrimary.withValues(alpha: 0.34),
               ),
             ),
           ),
@@ -159,11 +157,11 @@ class MarketRow extends StatelessWidget {
                 height: 46,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: kOrangeColor.withValues(alpha: 0.14),
+                  color: AppColors.primary.withValues(alpha: 0.14),
                 ),
                 child: Icon(
                   Icons.currency_bitcoin_rounded,
-                  color: kOrangeColor,
+                  color: AppColors.primary,
                   size: 24,
                 ),
               ),
@@ -178,10 +176,8 @@ class MarketRow extends StatelessWidget {
                           child: Text(
                             symbol,
                             overflow: TextOverflow.ellipsis,
-                            style: AppTextStyles.paragraphMedium.copyWith(
-                              color: kWhiteColor,
-                              fontWeight: FontWeight.w700,
-                            ),
+                            style: AppTextStyles.paragraphMediumBold
+                                .copyWith(color: AppColors.textPrimary),
                           ),
                         ),
                         const SizedBox(width: 8),
@@ -191,13 +187,15 @@ class MarketRow extends StatelessWidget {
                             vertical: 3,
                           ),
                           decoration: BoxDecoration(
-                            color: kWhiteColor.withValues(alpha: 0.08),
+                            color:
+                                AppColors.textPrimary.withValues(alpha: 0.08),
                             borderRadius: BorderRadius.circular(999),
                           ),
                           child: Text(
                             leverage,
                             style: AppTextStyles.labelXSmall.copyWith(
-                              color: kWhiteColor.withValues(alpha: 0.76),
+                              color:
+                                  AppColors.textPrimary.withValues(alpha: 0.76),
                             ),
                           ),
                         ),
@@ -207,7 +205,7 @@ class MarketRow extends StatelessWidget {
                     Text(
                       '$name | $volume',
                       style: AppTextStyles.bodyMedium.copyWith(
-                        color: kWhiteColor.withValues(alpha: 0.42),
+                        color: AppColors.textPrimary.withValues(alpha: 0.42),
                       ),
                     ),
                   ],
@@ -220,7 +218,7 @@ class MarketRow extends StatelessWidget {
                   Text(
                     price,
                     style: AppTextStyles.paragraphLarge.copyWith(
-                      color: kWhiteColor,
+                      color: AppColors.textPrimary,
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -230,15 +228,13 @@ class MarketRow extends StatelessWidget {
                       vertical: 10,
                     ),
                     decoration: BoxDecoration(
-                      color: kOrangeColor.withValues(alpha: 0.18),
+                      color: AppColors.primary.withValues(alpha: 0.18),
                       borderRadius: BorderRadius.circular(999),
                     ),
                     child: Text(
                       change,
-                      style: AppTextStyles.paragraphSmall.copyWith(
-                        color: kOrangeColor,
-                        fontWeight: FontWeight.w700,
-                      ),
+                      style: AppTextStyles.paragraphSmallBold
+                          .copyWith(color: AppColors.primary),
                     ),
                   ),
                 ],
@@ -249,7 +245,7 @@ class MarketRow extends StatelessWidget {
         if (showDivider)
           Divider(
             height: 1,
-            color: kWhiteColor.withValues(alpha: 0.06),
+            color: AppColors.textPrimary.withValues(alpha: 0.06),
           ),
       ],
     );

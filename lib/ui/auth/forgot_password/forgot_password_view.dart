@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:koinkard/ui/auth/register/widgets/register_brand_header.dart';
-import 'package:koinkard/ui/common/app_colors.dart';
-import 'package:koinkard/ui/common/app_textstyles.dart';
+import 'package:koinkard/common/app_colors.dart';
+import 'package:koinkard/common/app_textstyles.dart';
 import 'package:koinkard/ui/widgets/commons/koinkardbutton.dart';
 import 'package:koinkard/ui/widgets/commons/koinkardinputfield.dart';
 import 'package:stacked/stacked.dart';
@@ -18,7 +18,7 @@ class ForgotPasswordView extends StackedView<ForgotPasswordViewModel> {
     Widget? child,
   ) {
     return Scaffold(
-      backgroundColor: kDarkColor,
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -27,7 +27,7 @@ class ForgotPasswordView extends StackedView<ForgotPasswordViewModel> {
               Container(
                 width: double.infinity,
                 decoration: const BoxDecoration(
-                  color: Color(0xFF0D0F0F),
+                  color: AppColors.authSurface,
                   borderRadius: BorderRadius.vertical(
                     top: Radius.circular(28),
                   ),
@@ -43,7 +43,7 @@ class ForgotPasswordView extends StackedView<ForgotPasswordViewModel> {
                             onPressed: () => Navigator.of(context).maybePop(),
                             icon: const Icon(
                               Icons.arrow_back_rounded,
-                              color: kWhiteColor,
+                              color: AppColors.textPrimary,
                               size: 28,
                             ),
                             padding: EdgeInsets.zero,
@@ -54,10 +54,8 @@ class ForgotPasswordView extends StackedView<ForgotPasswordViewModel> {
                             onPressed: viewModel.goToLogin,
                             child: Text(
                               'Back to Login',
-                              style: AppTextStyles.paragraphSmall.copyWith(
-                                color: kOrangeColor,
-                                fontWeight: FontWeight.w500,
-                              ),
+                              style: AppTextStyles.paragraphSmallMedium
+                                  .copyWith(color: AppColors.primary),
                             ),
                           ),
                         ],
@@ -66,16 +64,15 @@ class ForgotPasswordView extends StackedView<ForgotPasswordViewModel> {
                       Text(
                         'Forgot your password?',
                         style: AppTextStyles.headingSmall.copyWith(
-                          color: kWhiteColor,
+                          color: AppColors.textPrimary,
                         ),
                       ),
                       const SizedBox(height: 12),
                       Text(
                         'Enter the email address or mobile number linked to your KoinKard account and we will help you reset access.',
-                        style: AppTextStyles.bodyMedium.copyWith(
-                          color: kWhiteColor.withValues(alpha: 0.68),
-                          height: 1.7,
-                        ),
+                        style: AppTextStyles.authDescription.copyWith(
+                            color:
+                                AppColors.textPrimary.withValues(alpha: 0.68)),
                       ),
                       const SizedBox(height: 30),
                       KoinkardInputField(
@@ -83,11 +80,11 @@ class ForgotPasswordView extends StackedView<ForgotPasswordViewModel> {
                         label: 'Email/Mobile Number',
                         hintText: 'Enter your email or phone number',
                         keyboardType: TextInputType.emailAddress,
-                        fillColor: const Color(0xFF1A1B22),
-                        borderColor: Colors.transparent,
+                        fillColor: AppColors.inputSurface,
+                        borderColor: AppColors.transparent,
                         prefixIcon: const Icon(
                           Icons.lock_reset_rounded,
-                          color: kWhiteColor,
+                          color: AppColors.textPrimary,
                           size: 22,
                         ),
                       ),
@@ -95,7 +92,7 @@ class ForgotPasswordView extends StackedView<ForgotPasswordViewModel> {
                       KoinkardPrimaryButton(
                         text: 'Send Reset Link',
                         height: 66,
-                        textColor: kWhiteColor,
+                        textColor: AppColors.textPrimary,
                         onTap: () {},
                       ),
                       const SizedBox(height: 18),
@@ -106,7 +103,8 @@ class ForgotPasswordView extends StackedView<ForgotPasswordViewModel> {
                           onPressed: viewModel.goToLogin,
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(
-                              color: kWhiteColor.withValues(alpha: 0.18),
+                              color:
+                                  AppColors.textPrimary.withValues(alpha: 0.18),
                             ),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(32),
@@ -114,10 +112,8 @@ class ForgotPasswordView extends StackedView<ForgotPasswordViewModel> {
                           ),
                           child: Text(
                             'Return to Login',
-                            style: AppTextStyles.paragraphMedium.copyWith(
-                              color: kWhiteColor,
-                              fontWeight: FontWeight.w600,
-                            ),
+                            style: AppTextStyles.paragraphMedium
+                                .copyWith(color: AppColors.textPrimary),
                           ),
                         ),
                       ),

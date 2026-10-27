@@ -1,7 +1,10 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:koinkard/ui/common/app_asset.dart';
-import 'package:koinkard/ui/common/app_colors.dart';
-import 'package:koinkard/ui/common/app_textstyles.dart';
+import 'package:koinkard/common/app_assets.dart';
+import 'package:koinkard/common/app_colors.dart';
+import 'package:koinkard/common/app_textstyles.dart';
 import 'package:koinkard/ui/views/profile/profile_viewmodel.dart';
 import 'package:koinkard/ui/widgets/commons/koinkardbutton.dart';
 
@@ -10,18 +13,25 @@ class UserCenterContent extends StatelessWidget {
     super.key,
     required this.activeTab,
     required this.google2FaEnabled,
+    required this.profileImagePath,
     required this.onGoogle2FaChanged,
+    required this.onProfileImageTap,
   });
 
   final UserCenterTab activeTab;
   final bool google2FaEnabled;
+  final String? profileImagePath;
   final ValueChanged<bool> onGoogle2FaChanged;
+  final VoidCallback onProfileImageTap;
 
   @override
   Widget build(BuildContext context) {
     switch (activeTab) {
       case UserCenterTab.myInfo:
-        return const _MyInfoTab();
+        return _MyInfoTab(
+          profileImagePath: profileImagePath,
+          onProfileImageTap: onProfileImageTap,
+        );
       case UserCenterTab.security:
         return _SecurityTab(
           google2FaEnabled: google2FaEnabled,
@@ -32,16 +42,24 @@ class UserCenterContent extends StatelessWidget {
 }
 
 class _MyInfoTab extends StatelessWidget {
-  const _MyInfoTab();
+  const _MyInfoTab({
+    required this.profileImagePath,
+    required this.onProfileImageTap,
+  });
+
+  final String? profileImagePath;
+  final VoidCallback onProfileImageTap;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const _ProfileRow(
+        _ProfileRow(
           icon: Icons.person_outline_rounded,
           title: 'Profile Picture',
           trailingAvatar: true,
+          avatarImagePath: profileImagePath,
+          onTap: onProfileImageTap,
         ),
         const _ProfileRow(
           icon: Icons.badge_outlined,
@@ -85,8 +103,8 @@ class _MyInfoTab extends StatelessWidget {
         const SizedBox(height: 18),
         const KoinkardPrimaryButton(
           text: 'Log Out',
-          backgroundColor: Colors.transparent,
-          textColor: kWhiteColor,
+          backgroundColor: AppColors.transparent,
+          textColor: AppColors.textPrimary,
           height: 56,
         ),
       ],
@@ -139,7 +157,7 @@ class _SecurityTab extends StatelessWidget {
           trailingText: 'Not Yet Configured',
         ),
         const SizedBox(height: 22),
-        const Divider(color: Color(0xFF161719), height: 1),
+        const Divider(color: AppColors.profileDivider, height: 1),
         const SizedBox(height: 16),
         const _SectionTitle(
           title: 'Advanced Protect',
@@ -156,7 +174,7 @@ class _SecurityTab extends StatelessWidget {
           title: 'Secure Transaction Approval',
         ),
         const SizedBox(height: 22),
-        const Divider(color: Color(0xFF161719), height: 1),
+        const Divider(color: AppColors.profileDivider, height: 1),
         const SizedBox(height: 16),
         const _SectionTitle(
           title: 'Scenario-based protection',
@@ -168,7 +186,7 @@ class _SecurityTab extends StatelessWidget {
           title: 'Withdrawal Security',
         ),
         const SizedBox(height: 22),
-        const Divider(color: Color(0xFF161719), height: 1),
+        const Divider(color: AppColors.profileDivider, height: 1),
         const SizedBox(height: 16),
         const _SectionTitle(
           title: 'Account access and management',
@@ -195,14 +213,14 @@ class _SecurityTab extends StatelessWidget {
         Text(
           'Last login time 2026-09-22 00:14:22',
           style: AppTextStyles.bodyMedium.copyWith(
-            color: kWhiteColor.withValues(alpha: 0.34),
+            color: AppColors.textPrimary.withValues(alpha: 0.34),
           ),
         ),
         const SizedBox(height: 4),
         Text(
           'Login device Android',
           style: AppTextStyles.bodyMedium.copyWith(
-            color: kWhiteColor.withValues(alpha: 0.34),
+            color: AppColors.textPrimary.withValues(alpha: 0.34),
           ),
         ),
       ],
@@ -226,17 +244,15 @@ class _SectionTitle extends StatelessWidget {
       children: [
         Text(
           title,
-          style: AppTextStyles.headingXSmall.copyWith(
-            color: kWhiteColor,
-            fontSize: 17,
-          ),
+          style: AppTextStyles.compactHeading
+              .copyWith(color: AppColors.textPrimary),
         ),
         if (subtitle.isNotEmpty) ...[
           const SizedBox(height: 4),
           Text(
             subtitle,
             style: AppTextStyles.bodyMedium.copyWith(
-              color: kWhiteColor.withValues(alpha: 0.34),
+              color: AppColors.textPrimary.withValues(alpha: 0.34),
             ),
           ),
         ],
@@ -253,6 +269,8 @@ class _ProfileRow extends StatelessWidget {
     this.trailingAvatar = false,
     this.trailingCopy = false,
     this.trailingLinks = false,
+    this.avatarImagePath,
+    this.onTap,
   });
 
   final IconData icon;
@@ -261,111 +279,141 @@ class _ProfileRow extends StatelessWidget {
   final bool trailingAvatar;
   final bool trailingCopy;
   final bool trailingLinks;
+  final String? avatarImagePath;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 18),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: kWhiteColor.withValues(alpha: 0.04),
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 18),
+        decoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(
+              color: AppColors.textPrimary.withValues(alpha: 0.04),
+            ),
           ),
         ),
-      ),
-      child: Row(
-        children: [
-          Icon(
-            icon,
-            color: kWhiteColor,
-            size: 25,
-          ),
-          const SizedBox(width: 18),
-          Expanded(
-            child: Text(
-              title,
-              style: AppTextStyles.headingXSmall.copyWith(
-                color: kWhiteColor,
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
+        child: Row(
+          children: [
+            Icon(
+              icon,
+              color: AppColors.textPrimary,
+              size: 25,
+            ),
+            const SizedBox(width: 18),
+            Expanded(
+              child: Text(
+                title,
+                style: AppTextStyles.profileRowTitle
+                    .copyWith(color: AppColors.textPrimary),
               ),
             ),
-          ),
-          if (trailingAvatar)
-            Container(
-              width: 32,
-              height: 32,
-              decoration: const BoxDecoration(shape: BoxShape.circle),
-              child: ClipOval(
-                child: Image.asset(
-                  AppAssets.kklogo,
-                  fit: BoxFit.cover,
+            if (trailingAvatar)
+              Container(
+                width: 32,
+                height: 32,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: AppColors.background,
+                ),
+                child: ClipOval(
+                  child: _ProfileSettingAvatar(imagePath: avatarImagePath),
                 ),
               ),
-            ),
-          if (trailingLinks)
-            Row(
-              children: [
-                Container(
-                  width: 30,
-                  height: 30,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Color(0xFF229ED9),
-                  ),
-                  child: const Icon(
-                    Icons.send_rounded,
-                    color: Colors.white,
-                    size: 17,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Container(
-                  width: 30,
-                  height: 30,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white,
-                    border: Border.all(
-                      color: kWhiteColor.withValues(alpha: 0.12),
+            if (trailingLinks)
+              Row(
+                children: [
+                  Container(
+                    width: 30,
+                    height: 30,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: AppColors.telegram,
+                    ),
+                    child: const Icon(
+                      Icons.send_rounded,
+                      color: AppColors.white,
+                      size: 17,
                     ),
                   ),
-                  child: const Center(
-                    child: Text(
-                      'X',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w700,
+                  const SizedBox(width: 8),
+                  Container(
+                    width: 30,
+                    height: 30,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: AppColors.white,
+                      border: Border.all(
+                        color: AppColors.textPrimary.withValues(alpha: 0.12),
+                      ),
+                    ),
+                    child: const Center(
+                      child: Text(
+                        'X',
+                        style: AppTextStyles.socialMark,
                       ),
                     ),
                   ),
+                ],
+              ),
+            if (trailingText != null) ...[
+              Text(
+                trailingText!,
+                style: AppTextStyles.paragraphMediumMedium.copyWith(
+                    color: AppColors.textPrimary.withValues(alpha: 0.38)),
+              ),
+              if (trailingCopy) ...[
+                const SizedBox(width: 8),
+                Icon(
+                  Icons.copy_all_outlined,
+                  color: AppColors.textPrimary.withValues(alpha: 0.34),
+                  size: 18,
                 ),
               ],
-            ),
-          if (trailingText != null) ...[
-            Text(
-              trailingText!,
-              style: AppTextStyles.paragraphMedium.copyWith(
-                color: kWhiteColor.withValues(alpha: 0.38),
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            if (trailingCopy) ...[
-              const SizedBox(width: 8),
-              Icon(
-                Icons.copy_all_outlined,
-                color: kWhiteColor.withValues(alpha: 0.34),
-                size: 18,
-              ),
             ],
+            const SizedBox(width: 10),
+            Icon(
+              Icons.chevron_right_rounded,
+              color: AppColors.textPrimary.withValues(alpha: 0.26),
+              size: 24,
+            ),
           ],
-          const SizedBox(width: 10),
-          Icon(
-            Icons.chevron_right_rounded,
-            color: kWhiteColor.withValues(alpha: 0.26),
-            size: 24,
-          ),
-        ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ProfileSettingAvatar extends StatelessWidget {
+  const _ProfileSettingAvatar({required this.imagePath});
+
+  final String? imagePath;
+
+  @override
+  Widget build(BuildContext context) {
+    if (imagePath == null || imagePath!.isEmpty) {
+      return Image.asset(
+        AppAssets.appicon,
+        fit: BoxFit.contain,
+      );
+    }
+
+    if (kIsWeb) {
+      return Image.network(
+        imagePath!,
+        fit: BoxFit.cover,
+      );
+    }
+
+    return Image.file(
+      File(imagePath!),
+      fit: BoxFit.cover,
+      errorBuilder: (context, error, stackTrace) => Image.asset(
+        AppAssets.appicon,
+        fit: BoxFit.contain,
       ),
     );
   }
@@ -391,7 +439,7 @@ class _ProfileSwitchRow extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            color: kWhiteColor.withValues(alpha: 0.04),
+            color: AppColors.textPrimary.withValues(alpha: 0.04),
           ),
         ),
       ),
@@ -399,27 +447,24 @@ class _ProfileSwitchRow extends StatelessWidget {
         children: [
           Icon(
             icon,
-            color: kWhiteColor,
+            color: AppColors.textPrimary,
             size: 25,
           ),
           const SizedBox(width: 18),
           Expanded(
             child: Text(
               title,
-              style: AppTextStyles.headingXSmall.copyWith(
-                color: kWhiteColor,
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-              ),
+              style: AppTextStyles.profileRowTitle
+                  .copyWith(color: AppColors.textPrimary),
             ),
           ),
           Switch(
             value: value,
             onChanged: onChanged,
-            activeThumbColor: Colors.white,
-            activeTrackColor: kOrangeColor,
-            inactiveThumbColor: Colors.white,
-            inactiveTrackColor: kWhiteColor.withValues(alpha: 0.16),
+            activeThumbColor: AppColors.white,
+            activeTrackColor: AppColors.primary,
+            inactiveThumbColor: AppColors.white,
+            inactiveTrackColor: AppColors.textPrimary.withValues(alpha: 0.16),
           ),
         ],
       ),

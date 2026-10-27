@@ -1,3 +1,5 @@
+import 'package:koinkard/common/app_textstyles.dart';
+import 'package:koinkard/common/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:stacked/stacked.dart';
@@ -6,7 +8,7 @@ import 'package:koinkard/ui/common/ui_helpers.dart';
 import 'startup_viewmodel.dart';
 
 class StartupView extends StackedView<StartupViewModel> {
-  const StartupView({Key? key}) : super(key: key);
+  const StartupView({super.key});
 
   @override
   Widget builder(
@@ -21,18 +23,18 @@ class StartupView extends StackedView<StartupViewModel> {
           children: [
             Text(
               'STACKED',
-              style: TextStyle(fontSize: 40, fontWeight: FontWeight.w900),
+              style: AppTextStyles.startupTitle,
             ),
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('Loading ...', style: TextStyle(fontSize: 16)),
+                Text('Loading ...', style: AppTextStyles.startupMessage),
                 horizontalSpaceSmall,
                 SizedBox(
                   width: 16,
                   height: 16,
                   child: CircularProgressIndicator(
-                    color: Colors.black,
+                    color: AppColors.background,
                     strokeWidth: 6,
                   ),
                 ),

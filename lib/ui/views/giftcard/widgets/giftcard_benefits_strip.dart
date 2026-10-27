@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:koinkard/ui/common/app_colors.dart';
-import 'package:koinkard/ui/common/app_textstyles.dart';
+import 'package:koinkard/common/app_colors.dart';
+import 'package:koinkard/common/app_textstyles.dart';
 
 class GiftcardBenefitsStrip extends StatelessWidget {
   const GiftcardBenefitsStrip({super.key});
@@ -18,9 +18,9 @@ class GiftcardBenefitsStrip extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(24),
-        color: const Color(0xFF101112),
+        color: AppColors.cardSurface,
         border: Border.all(
-          color: kWhiteColor.withValues(alpha: 0.06),
+          color: AppColors.textPrimary.withValues(alpha: 0.06),
         ),
       ),
       child: Row(
@@ -57,11 +57,11 @@ class _BenefitItem extends StatelessWidget {
           height: 44,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: kOrangeColor.withValues(alpha: 0.14),
+            color: AppColors.primary.withValues(alpha: 0.14),
           ),
           child: Icon(
             icon,
-            color: kOrangeColor,
+            color: AppColors.primary,
             size: 22,
           ),
         ),
@@ -69,10 +69,8 @@ class _BenefitItem extends StatelessWidget {
         Text(
           label,
           textAlign: TextAlign.center,
-          style: AppTextStyles.labelXSmall.copyWith(
-            color: kWhiteColor.withValues(alpha: 0.72),
-            height: 1.4,
-          ),
+          style: AppTextStyles.benefitLabel
+              .copyWith(color: AppColors.textPrimary.withValues(alpha: 0.72)),
         ),
       ],
     );

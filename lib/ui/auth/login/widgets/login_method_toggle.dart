@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:koinkard/ui/common/app_colors.dart';
-import 'package:koinkard/ui/common/app_textstyles.dart';
+import 'package:koinkard/common/app_colors.dart';
+import 'package:koinkard/common/app_textstyles.dart';
 
 class LoginMethodToggle extends StatelessWidget {
   const LoginMethodToggle({
@@ -54,16 +54,17 @@ class _LoginMethodChip extends StatelessWidget {
         duration: const Duration(milliseconds: 220),
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFF1B1D23) : Colors.transparent,
+          color: isSelected
+              ? AppColors.selectedLoginMethod
+              : AppColors.transparent,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Text(
           label,
-          style: AppTextStyles.paragraphSmall.copyWith(
-            color:
-                isSelected ? kWhiteColor : kWhiteColor.withValues(alpha: 0.36),
-            fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-          ),
+          style: AppTextStyles.loginTab(selected: isSelected).copyWith(
+              color: isSelected
+                  ? AppColors.textPrimary
+                  : AppColors.textPrimary.withValues(alpha: 0.36)),
         ),
       ),
     );

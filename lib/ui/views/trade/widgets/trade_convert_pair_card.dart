@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:koinkard/ui/common/app_colors.dart';
-import 'package:koinkard/ui/common/app_textstyles.dart';
+import 'package:koinkard/common/app_colors.dart';
+import 'package:koinkard/common/app_textstyles.dart';
 import 'package:koinkard/ui/views/trade/trade_viewmodel.dart';
 
 class TradeConvertPairCard extends StatelessWidget {
@@ -30,7 +30,7 @@ class TradeConvertPairCard extends StatelessWidget {
             Expanded(
               child: Container(
                 height: 1,
-                color: kWhiteColor.withValues(alpha: 0.12),
+                color: AppColors.textPrimary.withValues(alpha: 0.12),
               ),
             ),
             Container(
@@ -39,9 +39,9 @@ class TradeConvertPairCard extends StatelessWidget {
               margin: const EdgeInsets.symmetric(horizontal: 12),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: const Color(0xFF101112),
+                color: AppColors.cardSurface,
                 border: Border.all(
-                  color: kWhiteColor.withValues(alpha: 0.12),
+                  color: AppColors.textPrimary.withValues(alpha: 0.12),
                 ),
               ),
               child: IconButton(
@@ -49,7 +49,7 @@ class TradeConvertPairCard extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 icon: Icon(
                   Icons.swap_vert_rounded,
-                  color: kWhiteColor.withValues(alpha: 0.86),
+                  color: AppColors.textPrimary.withValues(alpha: 0.86),
                   size: 21,
                 ),
               ),
@@ -57,7 +57,7 @@ class TradeConvertPairCard extends StatelessWidget {
             Expanded(
               child: Container(
                 height: 1,
-                color: kWhiteColor.withValues(alpha: 0.12),
+                color: AppColors.textPrimary.withValues(alpha: 0.12),
               ),
             ),
           ],
@@ -93,10 +93,8 @@ class _TradePairBlock extends StatelessWidget {
             children: [
               Text(
                 label,
-                style: AppTextStyles.paragraphMedium.copyWith(
-                  color: kWhiteColor.withValues(alpha: 0.36),
-                  fontWeight: FontWeight.w500,
-                ),
+                style: AppTextStyles.paragraphMediumMedium.copyWith(
+                    color: AppColors.textPrimary.withValues(alpha: 0.36)),
               ),
               const Spacer(),
               if (showAvailableBalance)
@@ -104,15 +102,13 @@ class _TradePairBlock extends StatelessWidget {
                   children: [
                     Text(
                       'Available balance: ${asset.availableBalance}',
-                      style: AppTextStyles.paragraphSmall.copyWith(
-                        color: kWhiteColor.withValues(alpha: 0.7),
-                        fontWeight: FontWeight.w500,
-                      ),
+                      style: AppTextStyles.paragraphSmallMedium.copyWith(
+                          color: AppColors.textPrimary.withValues(alpha: 0.7)),
                     ),
                     const SizedBox(width: 4),
                     Icon(
                       Icons.chevron_right_rounded,
-                      color: kWhiteColor.withValues(alpha: 0.48),
+                      color: AppColors.textPrimary.withValues(alpha: 0.48),
                       size: 18,
                     ),
                   ],
@@ -126,7 +122,7 @@ class _TradePairBlock extends StatelessWidget {
               Expanded(
                 child: Row(
                   children: [
-                    _AssetCoinBadge(color: Color(asset.colorHex)),
+                    _AssetCoinBadge(color: asset.color),
                     const SizedBox(width: 10),
                     Flexible(
                       child: Row(
@@ -136,16 +132,14 @@ class _TradePairBlock extends StatelessWidget {
                             child: Text(
                               asset.symbol,
                               overflow: TextOverflow.ellipsis,
-                              style: AppTextStyles.headingXSmall.copyWith(
-                                color: kWhiteColor,
-                                fontSize: 17,
-                              ),
+                              style: AppTextStyles.compactHeading
+                                  .copyWith(color: AppColors.textPrimary),
                             ),
                           ),
                           const SizedBox(width: 4),
                           Icon(
                             Icons.keyboard_arrow_down_rounded,
-                            color: kWhiteColor,
+                            color: AppColors.textPrimary,
                             size: 20,
                           ),
                         ],
@@ -162,18 +156,15 @@ class _TradePairBlock extends StatelessWidget {
                     children: [
                       TextSpan(
                         text: asset.amountDisplay,
-                        style: AppTextStyles.headingSmall.copyWith(
-                          color: kWhiteColor.withValues(alpha: 0.18),
-                          fontSize: 22,
-                        ),
+                        style: AppTextStyles.smallCardHeading.copyWith(
+                            color:
+                                AppColors.textPrimary.withValues(alpha: 0.18)),
                       ),
                       if (asset.trailingLabel != '--')
                         TextSpan(
                           text: ' ${asset.trailingLabel}',
-                          style: AppTextStyles.paragraphLarge.copyWith(
-                            color: kOrangeColor,
-                            fontWeight: FontWeight.w700,
-                          ),
+                          style: AppTextStyles.paragraphLargeBold
+                              .copyWith(color: AppColors.primary),
                         ),
                     ],
                   ),
@@ -185,7 +176,7 @@ class _TradePairBlock extends StatelessWidget {
           Text(
             asset.trailingLabel == '--' ? '--' : '',
             style: AppTextStyles.headingSmall.copyWith(
-              color: kWhiteColor.withValues(alpha: 0.18),
+              color: AppColors.textPrimary.withValues(alpha: 0.18),
             ),
           ),
         ],
@@ -211,7 +202,7 @@ class _AssetCoinBadge extends StatelessWidget {
       child: const Icon(
         Icons.currency_bitcoin_rounded,
         size: 17,
-        color: Colors.white,
+        color: AppColors.white,
       ),
     );
   }

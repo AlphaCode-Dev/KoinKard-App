@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:koinkard/ui/common/app_colors.dart';
-import 'package:koinkard/ui/common/app_textstyles.dart';
+import 'package:koinkard/common/app_colors.dart';
+import 'package:koinkard/common/app_textstyles.dart';
 
 class TradeMarketTabs extends StatelessWidget {
   const TradeMarketTabs({
@@ -25,12 +25,12 @@ class TradeMarketTabs extends StatelessWidget {
               height: 30,
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
-                color: kOrangeColor,
+                color: AppColors.primary,
               ),
               child: const Icon(
                 Icons.menu_rounded,
                 size: 18,
-                color: kDarkColor,
+                color: AppColors.background,
               ),
             ),
             const SizedBox(width: 12),
@@ -49,14 +49,12 @@ class TradeMarketTabs extends StatelessWidget {
                           children: [
                             Text(
                               tab,
-                              style: AppTextStyles.paragraphLarge.copyWith(
-                                color: isActive
-                                    ? kWhiteColor
-                                    : kWhiteColor.withValues(alpha: 0.26),
-                                fontWeight: isActive
-                                    ? FontWeight.w700
-                                    : FontWeight.w600,
-                              ),
+                              style: AppTextStyles.tradeTab(active: isActive)
+                                  .copyWith(
+                                      color: isActive
+                                          ? AppColors.textPrimary
+                                          : AppColors.textPrimary
+                                              .withValues(alpha: 0.26)),
                             ),
                             if (tab == 'Alpha')
                               Padding(
@@ -66,7 +64,7 @@ class TradeMarketTabs extends StatelessWidget {
                                   height: 6,
                                   decoration: const BoxDecoration(
                                     shape: BoxShape.circle,
-                                    color: Color(0xFFFF4D6D),
+                                    color: AppColors.negative,
                                   ),
                                 ),
                               ),

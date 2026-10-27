@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:koinkard/ui/common/app_colors.dart';
-import 'package:koinkard/ui/common/app_textstyles.dart';
+import 'package:koinkard/common/app_colors.dart';
+import 'package:koinkard/common/app_textstyles.dart';
 
 class ProfileSectionList extends StatelessWidget {
   const ProfileSectionList({super.key});
@@ -36,18 +36,17 @@ class ProfileSectionList extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(28),
-        color: const Color(0xFF101112),
-        border: Border.all(color: kWhiteColor.withValues(alpha: 0.06)),
+        color: AppColors.cardSurface,
+        border:
+            Border.all(color: AppColors.textPrimary.withValues(alpha: 0.06)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             'Account',
-            style: AppTextStyles.headingXSmall.copyWith(
-              color: kWhiteColor,
-              fontSize: 22,
-            ),
+            style: AppTextStyles.cardHeading
+                .copyWith(color: AppColors.textPrimary),
           ),
           const SizedBox(height: 14),
           ...items.asMap().entries.map((entry) {
@@ -63,7 +62,7 @@ class ProfileSectionList extends StatelessWidget {
                 if (entry.key != items.length - 1)
                   Divider(
                     height: 22,
-                    color: kWhiteColor.withValues(alpha: 0.06),
+                    color: AppColors.textPrimary.withValues(alpha: 0.06),
                   ),
               ],
             );
@@ -89,7 +88,7 @@ class _SectionRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final accent = isLogout ? const Color(0xFFFF6B6B) : kOrangeColor;
+    final accent = isLogout ? AppColors.destructive : AppColors.primary;
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,16 +114,14 @@ class _SectionRow extends StatelessWidget {
               Text(
                 title,
                 style: AppTextStyles.paragraphMedium.copyWith(
-                  color: isLogout ? accent : kWhiteColor,
+                  color: isLogout ? accent : AppColors.textPrimary,
                 ),
               ),
               const SizedBox(height: 4),
               Text(
                 subtitle,
-                style: AppTextStyles.bodyMedium.copyWith(
-                  color: kWhiteColor.withValues(alpha: 0.54),
-                  height: 1.55,
-                ),
+                style: AppTextStyles.sectionDescription.copyWith(
+                    color: AppColors.textPrimary.withValues(alpha: 0.54)),
               ),
             ],
           ),
@@ -132,7 +129,7 @@ class _SectionRow extends StatelessWidget {
         const SizedBox(width: 12),
         Icon(
           Icons.chevron_right_rounded,
-          color: kWhiteColor.withValues(alpha: 0.34),
+          color: AppColors.textPrimary.withValues(alpha: 0.34),
           size: 22,
         ),
       ],

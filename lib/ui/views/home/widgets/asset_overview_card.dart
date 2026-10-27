@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:koinkard/ui/common/app_colors.dart';
-import 'package:koinkard/ui/common/app_textstyles.dart';
+import 'package:koinkard/common/app_colors.dart';
+import 'package:koinkard/common/app_textstyles.dart';
 
 class AssetOverviewCard extends StatelessWidget {
   const AssetOverviewCard({
@@ -26,7 +26,7 @@ class AssetOverviewCard extends StatelessWidget {
       padding: const EdgeInsets.all(22),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(28),
-        color: const Color(0xFF111214),
+        color: AppColors.elevatedSurface,
       ),
       child: Stack(
         children: [
@@ -59,7 +59,7 @@ class AssetOverviewCard extends StatelessWidget {
                                     'Total Assets',
                                     style:
                                         AppTextStyles.paragraphSmall.copyWith(
-                                      color: kWhiteColor.withValues(
+                                      color: AppColors.textPrimary.withValues(
                                         alpha: 0.48,
                                       ),
                                     ),
@@ -68,7 +68,8 @@ class AssetOverviewCard extends StatelessWidget {
                                   Icon(
                                     Icons.visibility_outlined,
                                     size: 18,
-                                    color: kWhiteColor.withValues(alpha: 0.36),
+                                    color: AppColors.textPrimary
+                                        .withValues(alpha: 0.36),
                                   ),
                                 ],
                               ),
@@ -87,17 +88,15 @@ class AssetOverviewCard extends StatelessWidget {
                             children: [
                               TextSpan(
                                 text: assetAmount,
-                                style: AppTextStyles.headingLarge.copyWith(
-                                  color: kWhiteColor,
-                                  fontSize: 42,
-                                ),
+                                style: AppTextStyles.walletBalance
+                                    .copyWith(color: AppColors.textPrimary),
                               ),
                               TextSpan(
                                 text: ' $selectedCurrency',
-                                style: AppTextStyles.paragraphMedium.copyWith(
-                                  color: kWhiteColor.withValues(alpha: 0.55),
-                                  fontWeight: FontWeight.w500,
-                                ),
+                                style: AppTextStyles.paragraphMediumMedium
+                                    .copyWith(
+                                        color: AppColors.textPrimary
+                                            .withValues(alpha: 0.55)),
                               ),
                             ],
                           ),
@@ -106,7 +105,8 @@ class AssetOverviewCard extends StatelessWidget {
                         Text(
                           "Today's P&L  $pnlAmount $selectedCurrency ($pnlPercent)",
                           style: AppTextStyles.bodyMedium.copyWith(
-                            color: kWhiteColor.withValues(alpha: 0.62),
+                            color:
+                                AppColors.textPrimary.withValues(alpha: 0.62),
                           ),
                         ),
                       ],
@@ -118,15 +118,13 @@ class AssetOverviewCard extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(22),
-                      color: kOrangeColor,
+                      color: AppColors.primary,
                     ),
                     alignment: Alignment.center,
                     child: Text(
                       'Deposit',
-                      style: AppTextStyles.paragraphMedium.copyWith(
-                        color: kDarkColor,
-                        fontWeight: FontWeight.w700,
-                      ),
+                      style: AppTextStyles.paragraphMediumBold
+                          .copyWith(color: AppColors.background),
                     ),
                   ),
                 ],
@@ -156,27 +154,25 @@ class _CurrencyDropdown extends StatelessWidget {
       height: 36,
       padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
-        color: kWhiteColor.withValues(alpha: 0.06),
+        color: AppColors.textPrimary.withValues(alpha: 0.06),
         borderRadius: BorderRadius.circular(14),
         border: Border.all(
-          color: kWhiteColor.withValues(alpha: 0.08),
+          color: AppColors.textPrimary.withValues(alpha: 0.08),
         ),
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
           value: value,
           onChanged: onChanged,
-          dropdownColor: const Color(0xFF17191D),
+          dropdownColor: AppColors.actionSurface,
           borderRadius: BorderRadius.circular(16),
           icon: Icon(
             Icons.keyboard_arrow_down_rounded,
-            color: kWhiteColor.withValues(alpha: 0.70),
+            color: AppColors.textPrimary.withValues(alpha: 0.70),
             size: 20,
           ),
-          style: AppTextStyles.paragraphSmall.copyWith(
-            color: kWhiteColor,
-            fontWeight: FontWeight.w700,
-          ),
+          style: AppTextStyles.paragraphSmallBold
+              .copyWith(color: AppColors.textPrimary),
           items: items
               .map(
                 (currency) => DropdownMenuItem<String>(
@@ -197,7 +193,7 @@ class VerticalStripePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = kWhiteColor.withValues(alpha: 0.05)
+      ..color = AppColors.textPrimary.withValues(alpha: 0.05)
       ..strokeWidth = 1;
 
     for (double x = 8; x < size.width; x += 18) {

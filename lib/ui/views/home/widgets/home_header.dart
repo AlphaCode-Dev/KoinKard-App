@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:koinkard/ui/common/app_asset.dart';
-import 'package:koinkard/ui/common/app_colors.dart';
-import 'package:koinkard/ui/common/app_textstyles.dart';
+import 'package:koinkard/common/app_assets.dart';
+import 'package:koinkard/common/app_colors.dart';
+import 'package:koinkard/common/app_textstyles.dart';
 
 class HomeHeader extends StatelessWidget {
   const HomeHeader({super.key});
@@ -34,15 +34,16 @@ class _ProfileAvatar extends StatelessWidget {
       height: 42,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: const Color(0xFF17181C),
-        border: Border.all(color: kWhiteColor.withValues(alpha: 0.08)),
+        color: AppColors.background,
+        border:
+            Border.all(color: AppColors.textPrimary.withValues(alpha: 0.08)),
       ),
       child: Padding(
         padding: const EdgeInsets.all(6),
         child: ClipOval(
           child: Image.asset(
-            AppAssets.kklogo,
-            fit: BoxFit.cover,
+            AppAssets.appicon,
+            fit: BoxFit.contain,
           ),
         ),
       ),
@@ -59,14 +60,14 @@ class _SearchBar extends StatelessWidget {
       height: 48,
       padding: const EdgeInsets.symmetric(horizontal: 14),
       decoration: BoxDecoration(
-        color: const Color(0xFF15171B),
+        color: AppColors.headerGradientStart,
         borderRadius: BorderRadius.circular(22),
       ),
       child: Row(
         children: [
           Icon(
             Icons.search_rounded,
-            color: kWhiteColor.withValues(alpha: 0.76),
+            color: AppColors.textPrimary.withValues(alpha: 0.76),
             size: 22,
           ),
           const SizedBox(width: 10),
@@ -77,7 +78,7 @@ class _SearchBar extends StatelessWidget {
                   TextSpan(
                     text: 'BTC/USDT ',
                     style: AppTextStyles.paragraphMedium.copyWith(
-                      color: kWhiteColor.withValues(alpha: 0.94),
+                      color: AppColors.textPrimary.withValues(alpha: 0.94),
                     ),
                   ),
                   WidgetSpan(
@@ -87,14 +88,14 @@ class _SearchBar extends StatelessWidget {
                       child: Icon(
                         Icons.circle,
                         size: 6,
-                        color: kOrangeColor.withValues(alpha: 0.95),
+                        color: AppColors.primary.withValues(alpha: 0.95),
                       ),
                     ),
                   ),
                   TextSpan(
                     text: ' Markets',
                     style: AppTextStyles.bodyMedium.copyWith(
-                      color: kWhiteColor.withValues(alpha: 0.42),
+                      color: AppColors.textPrimary.withValues(alpha: 0.42),
                     ),
                   ),
                 ],
@@ -129,11 +130,11 @@ class HeaderIcon extends StatelessWidget {
           height: 42,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            color: const Color(0xFF15171B),
+            color: AppColors.headerGradientStart,
           ),
           child: Icon(
             icon,
-            color: kWhiteColor,
+            color: AppColors.textPrimary,
             size: 22,
           ),
         ),
@@ -144,15 +145,13 @@ class HeaderIcon extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
               decoration: BoxDecoration(
-                color: const Color(0xFFFF4D6D),
+                color: AppColors.negative,
                 borderRadius: BorderRadius.circular(999),
               ),
               child: Text(
                 badge!,
-                style: AppTextStyles.labelXSmall.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w700,
-                ),
+                style: AppTextStyles.labelXSmallBold
+                    .copyWith(color: AppColors.white),
               ),
             ),
           ),

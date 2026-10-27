@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:koinkard/ui/common/app_asset.dart';
+import 'package:koinkard/common/app_assets.dart';
 import 'package:stacked/stacked.dart';
-import '../../common/app_colors.dart';
+import 'package:koinkard/common/app_colors.dart';
 import 'splash_viewmodel.dart';
 
 class SplashView extends StackedView<SplashViewModel> {
@@ -15,7 +15,7 @@ class SplashView extends StackedView<SplashViewModel> {
     Widget? child,
   ) {
     return Scaffold(
-      backgroundColor: kDarkColor,
+      backgroundColor: AppColors.background,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),

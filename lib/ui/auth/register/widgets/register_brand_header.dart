@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:koinkard/ui/common/app_asset.dart';
+import 'package:koinkard/common/app_assets.dart';
 
 class RegisterBrandHeader extends StatelessWidget {
   const RegisterBrandHeader({super.key});

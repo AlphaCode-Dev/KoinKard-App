@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../common/app_colors.dart';
+import 'package:koinkard/common/app_colors.dart';
 
 class OnboardingPageIndicator extends StatelessWidget {
   const OnboardingPageIndicator({
@@ -24,8 +24,9 @@ class OnboardingPageIndicator extends StatelessWidget {
           width: isActive ? 28 : 8,
           height: 8,
           decoration: BoxDecoration(
-            color:
-                isActive ? kOrangeColor : kWhiteColor.withValues(alpha: 0.26),
+            color: isActive
+                ? AppColors.primary
+                : AppColors.textPrimary.withValues(alpha: 0.26),
             borderRadius: BorderRadius.circular(999),
           ),
         );

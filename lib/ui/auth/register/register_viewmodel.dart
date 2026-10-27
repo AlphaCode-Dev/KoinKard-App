@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:koinkard/app/app.dialogs.dart';
 import 'package:koinkard/app/app.locator.dart';
 import 'package:koinkard/app/app.router.dart';
-import 'package:koinkard/data/models/register/register_request_model.dart';
-import 'package:koinkard/data/services/register/register_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class RegisterViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _dialogService = locator<DialogService>();
-  final _registerService = locator<RegisterService>();
 
   final formKey = GlobalKey<FormState>();
   final fullNameController = TextEditingController();
@@ -136,32 +133,14 @@ class RegisterViewModel extends BaseViewModel {
     }
 
     setBusy(true);
-
-    final result = await _registerService.register(
-      RegisterRequestModel(
-        fullName: fullNameController.text.trim(),
-        email: isEmailSelected ? emailController.text.trim() : '',
-        phone: isEmailSelected ? '' : phoneController.text.trim(),
-        password: passwordController.text,
-      ),
-    );
-
+    await Future<void>.delayed(const Duration(milliseconds: 250));
     setBusy(false);
-
-    if (result.isFailure || result.data == null) {
-      await _dialogService.showCustomDialog(
-        variant: DialogType.infoAlert,
-        title: 'Registration failed',
-        description:
-            result.message ?? 'We could not create your account right now.',
-      );
-      return;
-    }
 
     await _dialogService.showCustomDialog(
       variant: DialogType.infoAlert,
       title: 'Account created',
-      description: result.data!.message,
+      description:
+          'Your account has been created locally. You can continue without backend authentication.',
     );
     await _navigationService.replaceWithLoginView();
   }

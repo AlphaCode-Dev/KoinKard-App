@@ -1,7 +1,8 @@
+import 'package:koinkard/common/app_textstyles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:koinkard/ui/common/app_colors.dart';
+import 'package:koinkard/common/app_colors.dart';
 
 class KoinkardPrimaryButton extends StatelessWidget {
   final String text;
@@ -35,9 +36,9 @@ class KoinkardPrimaryButton extends StatelessWidget {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           elevation: 0,
-          backgroundColor: backgroundColor ?? kOrangeColor,
-          disabledBackgroundColor:
-              disabledBackgroundColor ?? kOrangeColor.withValues(alpha: 0.45),
+          backgroundColor: backgroundColor ?? AppColors.primary,
+          disabledBackgroundColor: disabledBackgroundColor ??
+              AppColors.primary.withValues(alpha: 0.45),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.r),
           ),
@@ -53,19 +54,15 @@ class KoinkardPrimaryButton extends StatelessWidget {
                 child: CircularProgressIndicator(
                   strokeWidth: 2.2,
                   valueColor: AlwaysStoppedAnimation<Color>(
-                    textColor ?? Colors.white,
+                    textColor ?? AppColors.white,
                   ),
                 ),
               )
             else
               Text(
                 text,
-                style: TextStyle(
-                  letterSpacing: 1,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16.sp,
-                  color: textColor ?? Colors.white,
-                ),
+                style: AppTextStyles.buttonLabel
+                    .copyWith(color: textColor ?? AppColors.white),
               ),
             if (!isLoading && icon != null) ...[
               SizedBox(width: 8.w),

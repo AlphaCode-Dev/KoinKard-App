@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:koinkard/ui/common/app_asset.dart';
-import 'package:koinkard/ui/common/app_colors.dart';
-import 'package:koinkard/ui/common/app_textstyles.dart';
+import 'package:koinkard/common/app_assets.dart';
+import 'package:koinkard/common/app_colors.dart';
+import 'package:koinkard/common/app_textstyles.dart';
 
 class ProfileHeaderCard extends StatelessWidget {
   const ProfileHeaderCard({super.key});
@@ -17,12 +17,13 @@ class ProfileHeaderCard extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            const Color(0xFF141517),
-            kOrangeColor.withValues(alpha: 0.20),
-            const Color(0xFF0B0C0D),
+            AppColors.profileGradientEnd,
+            AppColors.primary.withValues(alpha: 0.20),
+            AppColors.profileGradientStart,
           ],
         ),
-        border: Border.all(color: kWhiteColor.withValues(alpha: 0.06)),
+        border:
+            Border.all(color: AppColors.textPrimary.withValues(alpha: 0.06)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,8 +35,9 @@ class ProfileHeaderCard extends StatelessWidget {
                 height: 60,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
+                  color: AppColors.background,
                   border: Border.all(
-                    color: kWhiteColor.withValues(alpha: 0.12),
+                    color: AppColors.textPrimary.withValues(alpha: 0.12),
                     width: 2,
                   ),
                 ),
@@ -43,7 +45,7 @@ class ProfileHeaderCard extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(10),
                     child: Image.asset(
-                      AppAssets.kklogo,
+                      AppAssets.appicon,
                       fit: BoxFit.contain,
                     ),
                   ),
@@ -56,16 +58,14 @@ class ProfileHeaderCard extends StatelessWidget {
                   children: [
                     Text(
                       'AlphaCode',
-                      style: AppTextStyles.headingXSmall.copyWith(
-                        color: kWhiteColor,
-                        fontSize: 22,
-                      ),
+                      style: AppTextStyles.cardHeading
+                          .copyWith(color: AppColors.textPrimary),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       'alphacode@koinkard.app',
                       style: AppTextStyles.bodyMedium.copyWith(
-                        color: kWhiteColor.withValues(alpha: 0.62),
+                        color: AppColors.textPrimary.withValues(alpha: 0.62),
                       ),
                     ),
                   ],
@@ -78,11 +78,11 @@ class ProfileHeaderCard extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
-                  color: kWhiteColor.withValues(alpha: 0.08),
+                  color: AppColors.textPrimary.withValues(alpha: 0.08),
                 ),
                 child: Icon(
                   Icons.edit_outlined,
-                  color: kWhiteColor.withValues(alpha: 0.92),
+                  color: AppColors.textPrimary.withValues(alpha: 0.92),
                   size: 20,
                 ),
               ),
@@ -134,7 +134,7 @@ class _HeaderChip extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(18),
-        color: kWhiteColor.withValues(alpha: 0.04),
+        color: AppColors.textPrimary.withValues(alpha: 0.04),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -142,14 +142,14 @@ class _HeaderChip extends StatelessWidget {
           Text(
             label,
             style: AppTextStyles.labelXSmall.copyWith(
-              color: kWhiteColor.withValues(alpha: 0.52),
+              color: AppColors.textPrimary.withValues(alpha: 0.52),
             ),
           ),
           const SizedBox(height: 8),
           Text(
             value,
             style: AppTextStyles.paragraphSmall.copyWith(
-              color: kWhiteColor,
+              color: AppColors.textPrimary,
             ),
           ),
         ],

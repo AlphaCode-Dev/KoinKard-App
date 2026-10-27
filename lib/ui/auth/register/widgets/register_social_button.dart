@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:koinkard/ui/common/app_colors.dart';
-import 'package:koinkard/ui/common/app_textstyles.dart';
+import 'package:koinkard/common/app_colors.dart';
+import 'package:koinkard/common/app_textstyles.dart';
 
 class RegisterSocialButton extends StatelessWidget {
   const RegisterSocialButton({
@@ -23,10 +23,10 @@ class RegisterSocialButton extends StatelessWidget {
         child: Ink(
           height: 72,
           decoration: BoxDecoration(
-            color: const Color(0xFF18191F),
+            color: AppColors.socialButtonSurface,
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
-              color: kWhiteColor.withValues(alpha: 0.06),
+              color: AppColors.textPrimary.withValues(alpha: 0.06),
             ),
           ),
           child: Row(
@@ -36,10 +36,8 @@ class RegisterSocialButton extends StatelessWidget {
               const SizedBox(width: 12),
               Text(
                 label,
-                style: AppTextStyles.paragraphSmall.copyWith(
-                  color: kWhiteColor,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: AppTextStyles.paragraphSmallMedium
+                    .copyWith(color: AppColors.textPrimary),
               ),
             ],
           ),

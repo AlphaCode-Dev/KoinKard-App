@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:koinkard/ui/common/app_colors.dart';
-import 'package:koinkard/ui/common/app_textstyles.dart';
+import 'package:koinkard/common/app_colors.dart';
+import 'package:koinkard/common/app_textstyles.dart';
 import 'package:koinkard/ui/views/trade/trade_viewmodel.dart';
 
 class TradeConvertModeTabs extends StatelessWidget {
@@ -56,10 +56,10 @@ class _ModeLabel extends StatelessWidget {
       onTap: onTap,
       child: Text(
         label,
-        style: AppTextStyles.headingXSmall.copyWith(
-          fontSize: 16,
-          color: isActive ? kWhiteColor : kWhiteColor.withValues(alpha: 0.4),
-        ),
+        style: AppTextStyles.tabHeading.copyWith(
+            color: isActive
+                ? AppColors.textPrimary
+                : AppColors.textPrimary.withValues(alpha: 0.4)),
       ),
     );
   }
@@ -75,7 +75,7 @@ class _ModeIcon extends StatelessWidget {
     return Icon(
       icon,
       size: 22,
-      color: kWhiteColor.withValues(alpha: 0.56),
+      color: AppColors.textPrimary.withValues(alpha: 0.56),
     );
   }
 }

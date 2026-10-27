@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:koinkard/ui/common/app_colors.dart';
+import 'package:koinkard/common/app_colors.dart';
+import 'package:koinkard/common/app_textstyles.dart';
 import 'package:koinkard/ui/views/trade/widgets/trade_convert_footer.dart';
-import 'package:koinkard/ui/views/trade/widgets/trade_convert_mode_tabs.dart';
 import 'package:koinkard/ui/views/trade/widgets/trade_convert_pair_card.dart';
-import 'package:koinkard/ui/views/trade/widgets/trade_market_tabs.dart';
 import 'package:stacked/stacked.dart';
 
 import 'trade_viewmodel.dart';
@@ -18,21 +17,35 @@ class TradeView extends StackedView<TradeViewModel> {
     Widget? child,
   ) {
     return Scaffold(
-      backgroundColor: kDarkColor,
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(20, 12, 20, 28),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TradeMarketTabs(
-                activeTab: viewModel.activeMarketTab,
-                onTabSelected: viewModel.selectMarketTab,
-              ),
-              const SizedBox(height: 28),
-              TradeConvertModeTabs(
-                activeMode: viewModel.activeConvertMode,
-                onModeSelected: viewModel.selectConvertMode,
+              Row(
+                children: [
+                  Container(
+                    width: 34,
+                    height: 34,
+                    decoration: const BoxDecoration(
+                      color: AppColors.primary,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.sync_alt_rounded,
+                      color: AppColors.background,
+                      size: 20,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Text(
+                    'Convert',
+                    style: AppTextStyles.pageHeading
+                        .copyWith(color: AppColors.textPrimary),
+                  ),
+                ],
               ),
               const SizedBox(height: 18),
               TradeConvertPairCard(
@@ -41,9 +54,7 @@ class TradeView extends StackedView<TradeViewModel> {
                 onSwapTap: viewModel.swapAssets,
               ),
               const SizedBox(height: 22),
-              TradeConvertFooter(
-                activeMarketTab: viewModel.activeMarketTab,
-              ),
+              const TradeConvertFooter(),
             ],
           ),
         ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:koinkard/ui/auth/login/widgets/login_method_toggle.dart';
 import 'package:koinkard/ui/auth/register/widgets/register_brand_header.dart';
-import 'package:koinkard/ui/common/app_colors.dart';
-import 'package:koinkard/ui/common/app_textstyles.dart';
+import 'package:koinkard/common/app_colors.dart';
+import 'package:koinkard/common/app_textstyles.dart';
 import 'package:koinkard/ui/widgets/commons/koinkardbutton.dart';
 import 'package:koinkard/ui/widgets/commons/koinkardinputfield.dart';
 import 'package:stacked/stacked.dart';
@@ -19,7 +19,7 @@ class RegisterView extends StackedView<RegisterViewModel> {
     Widget? child,
   ) {
     return Scaffold(
-      backgroundColor: kDarkColor,
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: SingleChildScrollView(
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
@@ -29,7 +29,7 @@ class RegisterView extends StackedView<RegisterViewModel> {
               Container(
                 width: double.infinity,
                 decoration: const BoxDecoration(
-                  color: Color(0xFF0D0F0F),
+                  color: AppColors.authSurface,
                   borderRadius: BorderRadius.vertical(
                     top: Radius.circular(28),
                   ),
@@ -50,7 +50,7 @@ class RegisterView extends StackedView<RegisterViewModel> {
                               onPressed: () => Navigator.of(context).maybePop(),
                               icon: const Icon(
                                 Icons.arrow_back_rounded,
-                                color: kWhiteColor,
+                                color: AppColors.textPrimary,
                                 size: 28,
                               ),
                               padding: EdgeInsets.zero,
@@ -61,10 +61,8 @@ class RegisterView extends StackedView<RegisterViewModel> {
                               onPressed: viewModel.goToLogin,
                               child: Text(
                                 'Login Now',
-                                style: AppTextStyles.paragraphSmall.copyWith(
-                                  color: kOrangeColor,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                                style: AppTextStyles.paragraphSmallMedium
+                                    .copyWith(color: AppColors.primary),
                               ),
                             ),
                           ],
@@ -73,16 +71,15 @@ class RegisterView extends StackedView<RegisterViewModel> {
                         Text(
                           'Create a KoinKard account',
                           style: AppTextStyles.headingSmall.copyWith(
-                            color: kWhiteColor,
+                            color: AppColors.textPrimary,
                           ),
                         ),
                         const SizedBox(height: 10),
                         Text(
                           'Use your real details so we can create and secure your account properly.',
-                          style: AppTextStyles.paragraphSmall.copyWith(
-                            color: kWhiteColor.withValues(alpha: 0.52),
-                            height: 1.6,
-                          ),
+                          style: AppTextStyles.loginDescription.copyWith(
+                              color: AppColors.textPrimary
+                                  .withValues(alpha: 0.52)),
                         ),
                         const SizedBox(height: 28),
                         KoinkardInputField(
@@ -93,11 +90,11 @@ class RegisterView extends StackedView<RegisterViewModel> {
                           textInputAction: TextInputAction.next,
                           validator: viewModel.validateFullName,
                           onChanged: viewModel.onFieldChanged,
-                          fillColor: const Color(0xFF1A1B22),
-                          borderColor: Colors.transparent,
+                          fillColor: AppColors.inputSurface,
+                          borderColor: AppColors.transparent,
                           prefixIcon: const Icon(
                             Icons.person_outline_rounded,
-                            color: kWhiteColor,
+                            color: AppColors.textPrimary,
                             size: 22,
                           ),
                         ),
@@ -123,8 +120,8 @@ class RegisterView extends StackedView<RegisterViewModel> {
                               ? viewModel.validateEmail
                               : viewModel.validatePhone,
                           onChanged: viewModel.onFieldChanged,
-                          fillColor: const Color(0xFF1A1B22),
-                          borderColor: Colors.transparent,
+                          fillColor: AppColors.inputSurface,
+                          borderColor: AppColors.transparent,
                           helperText: viewModel.isEmailSelected
                               ? 'Register with your email address.'
                               : 'Register with your phone number.',
@@ -132,7 +129,7 @@ class RegisterView extends StackedView<RegisterViewModel> {
                             viewModel.isEmailSelected
                                 ? Icons.mail_outline_rounded
                                 : Icons.phone_iphone_rounded,
-                            color: kWhiteColor,
+                            color: AppColors.textPrimary,
                             size: 22,
                           ),
                         ),
@@ -146,11 +143,11 @@ class RegisterView extends StackedView<RegisterViewModel> {
                           onChanged: viewModel.onFieldChanged,
                           onFieldSubmitted: (_) => viewModel.register(),
                           obscureText: true,
-                          fillColor: const Color(0xFF1A1B22),
-                          borderColor: Colors.transparent,
+                          fillColor: AppColors.inputSurface,
+                          borderColor: AppColors.transparent,
                           prefixIcon: const Icon(
                             Icons.lock_outline_rounded,
-                            color: kWhiteColor,
+                            color: AppColors.textPrimary,
                             size: 22,
                           ),
                           helperText: 'Use at least 12 characters.',
@@ -171,15 +168,16 @@ class RegisterView extends StackedView<RegisterViewModel> {
                                     borderRadius: BorderRadius.circular(6),
                                   ),
                                   side: BorderSide(
-                                    color: kWhiteColor.withValues(alpha: 0.56),
+                                    color: AppColors.textPrimary
+                                        .withValues(alpha: 0.56),
                                   ),
                                   fillColor: WidgetStateProperty.resolveWith(
                                     (states) =>
                                         states.contains(WidgetState.selected)
-                                            ? kWhiteColor
-                                            : Colors.transparent,
+                                            ? AppColors.textPrimary
+                                            : AppColors.transparent,
                                   ),
-                                  checkColor: kDarkColor,
+                                  checkColor: AppColors.background,
                                   materialTapTargetSize:
                                       MaterialTapTargetSize.shrinkWrap,
                                   visualDensity: VisualDensity.compact,
@@ -189,13 +187,12 @@ class RegisterView extends StackedView<RegisterViewModel> {
                                     padding: const EdgeInsets.only(top: 4),
                                     child: RichText(
                                       text: TextSpan(
-                                        style:
-                                            AppTextStyles.bodyMedium.copyWith(
-                                          color: kWhiteColor.withValues(
-                                            alpha: 0.62,
-                                          ),
-                                          height: 1.65,
-                                        ),
+                                        style: AppTextStyles.bodyDescription
+                                            .copyWith(
+                                                color: AppColors.textPrimary
+                                                    .withValues(
+                                          alpha: 0.62,
+                                        )),
                                         children: const [
                                           TextSpan(
                                             text:
@@ -203,18 +200,12 @@ class RegisterView extends StackedView<RegisterViewModel> {
                                           ),
                                           TextSpan(
                                             text: 'Terms of Service',
-                                            style: TextStyle(
-                                              color: kWhiteColor,
-                                              fontWeight: FontWeight.w600,
-                                            ),
+                                            style: AppTextStyles.legalLink,
                                           ),
                                           TextSpan(text: ' & '),
                                           TextSpan(
                                             text: 'Privacy Policy',
-                                            style: TextStyle(
-                                              color: kWhiteColor,
-                                              fontWeight: FontWeight.w600,
-                                            ),
+                                            style: AppTextStyles.legalLink,
                                           ),
                                         ],
                                       ),
@@ -229,7 +220,7 @@ class RegisterView extends StackedView<RegisterViewModel> {
                         KoinkardPrimaryButton(
                           text: 'Create Account',
                           height: 66,
-                          textColor: kDarkColor,
+                          textColor: AppColors.background,
                           isLoading: viewModel.isBusy,
                           onTap:
                               viewModel.canSubmit ? viewModel.register : null,

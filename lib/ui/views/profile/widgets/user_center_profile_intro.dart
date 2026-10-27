@@ -1,10 +1,20 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:koinkard/ui/common/app_asset.dart';
-import 'package:koinkard/ui/common/app_colors.dart';
-import 'package:koinkard/ui/common/app_textstyles.dart';
+import 'package:koinkard/common/app_assets.dart';
+import 'package:koinkard/common/app_colors.dart';
+import 'package:koinkard/common/app_textstyles.dart';
 
 class UserCenterProfileIntro extends StatelessWidget {
-  const UserCenterProfileIntro({super.key});
+  const UserCenterProfileIntro({
+    super.key,
+    required this.profileImagePath,
+    required this.onProfileImageTap,
+  });
+
+  final String? profileImagePath;
+  final VoidCallback onProfileImageTap;
 
   @override
   Widget build(BuildContext context) {
@@ -13,24 +23,49 @@ class UserCenterProfileIntro extends StatelessWidget {
       children: [
         Row(
           children: [
-            Container(
-              width: 72,
-              height: 72,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: const Color(0xFF111214),
-                border: Border.all(
-                  color: kWhiteColor.withValues(alpha: 0.08),
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: ClipOval(
-                  child: Image.asset(
-                    AppAssets.kklogo,
-                    fit: BoxFit.cover,
+            GestureDetector(
+              onTap: onProfileImageTap,
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Container(
+                    width: 72,
+                    height: 72,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: AppColors.background,
+                      border: Border.all(
+                        color: AppColors.textPrimary.withValues(alpha: 0.08),
+                      ),
+                    ),
+                    child: Padding(
+                      padding:
+                          EdgeInsets.all(profileImagePath == null ? 10 : 0),
+                      child: ClipOval(
+                        child: _ProfileImage(imagePath: profileImagePath),
+                      ),
+                    ),
                   ),
-                ),
+                  Positioned(
+                    right: -2,
+                    bottom: -2,
+                    child: Container(
+                      width: 26,
+                      height: 26,
+                      decoration: BoxDecoration(
+                        color: AppColors.primary,
+                        shape: BoxShape.circle,
+                        border:
+                            Border.all(color: AppColors.background, width: 2),
+                      ),
+                      child: const Icon(
+                        Icons.edit_rounded,
+                        color: AppColors.white,
+                        size: 14,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             const SizedBox(width: 16),
@@ -40,10 +75,8 @@ class UserCenterProfileIntro extends StatelessWidget {
                 children: [
                   Text(
                     'AlphaCode',
-                    style: AppTextStyles.headingMedium.copyWith(
-                      color: kWhiteColor,
-                      fontSize: 24,
-                    ),
+                    style: AppTextStyles.profileName
+                        .copyWith(color: AppColors.textPrimary),
                   ),
                   const SizedBox(height: 6),
                   Container(
@@ -53,12 +86,12 @@ class UserCenterProfileIntro extends StatelessWidget {
                     ),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(999),
-                      color: kWhiteColor.withValues(alpha: 0.08),
+                      color: AppColors.textPrimary.withValues(alpha: 0.08),
                     ),
                     child: Text(
                       'Site: KoinKard Global',
                       style: AppTextStyles.labelXSmall.copyWith(
-                        color: kWhiteColor.withValues(alpha: 0.78),
+                        color: AppColors.textPrimary.withValues(alpha: 0.78),
                       ),
                     ),
                   ),
@@ -73,11 +106,12 @@ class UserCenterProfileIntro extends StatelessWidget {
           padding: const EdgeInsets.all(18),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(22),
-            color: const Color(0xFF0E0F10),
-            border: Border.all(color: kWhiteColor.withValues(alpha: 0.05)),
+            color: AppColors.profileProtectionSurface,
+            border: Border.all(
+                color: AppColors.textPrimary.withValues(alpha: 0.05)),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.32),
+                color: AppColors.background.withValues(alpha: 0.32),
                 blurRadius: 24,
                 offset: const Offset(0, 10),
               ),
@@ -90,15 +124,13 @@ class UserCenterProfileIntro extends StatelessWidget {
                 children: [
                   Text(
                     'KoinKard Protect',
-                    style: AppTextStyles.headingXSmall.copyWith(
-                      color: kWhiteColor,
-                      fontSize: 17,
-                    ),
+                    style: AppTextStyles.compactHeading
+                        .copyWith(color: AppColors.textPrimary),
                   ),
                   const SizedBox(width: 6),
                   Icon(
                     Icons.help_outline_rounded,
-                    color: kWhiteColor.withValues(alpha: 0.76),
+                    color: AppColors.textPrimary.withValues(alpha: 0.76),
                     size: 19,
                   ),
                 ],
@@ -106,23 +138,51 @@ class UserCenterProfileIntro extends StatelessWidget {
               const SizedBox(height: 8),
               Text(
                 'Add an anti-phishing code to your KoinKard emails and SMS messages to help detect spoofing attempts.',
-                style: AppTextStyles.bodyMedium.copyWith(
-                  color: kWhiteColor.withValues(alpha: 0.46),
-                  height: 1.4,
-                ),
+                style: AppTextStyles.compactDescription.copyWith(
+                    color: AppColors.textPrimary.withValues(alpha: 0.46)),
               ),
               const SizedBox(height: 10),
               Text(
                 'Set up anti-phishing code ->',
-                style: AppTextStyles.paragraphSmall.copyWith(
-                  color: kOrangeColor,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: AppTextStyles.paragraphSmall
+                    .copyWith(color: AppColors.primary),
               ),
             ],
           ),
         ),
       ],
+    );
+  }
+}
+
+class _ProfileImage extends StatelessWidget {
+  const _ProfileImage({required this.imagePath});
+
+  final String? imagePath;
+
+  @override
+  Widget build(BuildContext context) {
+    if (imagePath == null || imagePath!.isEmpty) {
+      return Image.asset(
+        AppAssets.appicon,
+        fit: BoxFit.contain,
+      );
+    }
+
+    if (kIsWeb) {
+      return Image.network(
+        imagePath!,
+        fit: BoxFit.cover,
+      );
+    }
+
+    return Image.file(
+      File(imagePath!),
+      fit: BoxFit.cover,
+      errorBuilder: (context, error, stackTrace) => Image.asset(
+        AppAssets.appicon,
+        fit: BoxFit.contain,
+      ),
     );
   }
 }

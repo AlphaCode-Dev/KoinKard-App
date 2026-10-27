@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:koinkard/ui/common/app_colors.dart';
-import 'package:koinkard/ui/common/app_textstyles.dart';
+import 'package:koinkard/common/app_colors.dart';
+import 'package:koinkard/common/app_textstyles.dart';
 
 class KoinkardInputField extends StatefulWidget {
   const KoinkardInputField({
@@ -87,10 +87,10 @@ class _KoinkardInputFieldState extends State<KoinkardInputField> {
   @override
   Widget build(BuildContext context) {
     final baseBorderColor =
-        widget.borderColor ?? kWhiteColor.withValues(alpha: 0.14);
-    final activeBorderColor = kOrangeColor.withValues(alpha: 0.85);
+        widget.borderColor ?? AppColors.textPrimary.withValues(alpha: 0.14);
+    final activeBorderColor = AppColors.primary.withValues(alpha: 0.85);
     final inputFillColor =
-        widget.fillColor ?? kWhiteColor.withValues(alpha: 0.06);
+        widget.fillColor ?? AppColors.textPrimary.withValues(alpha: 0.06);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,7 +99,7 @@ class _KoinkardInputFieldState extends State<KoinkardInputField> {
           Text(
             widget.label!,
             style: AppTextStyles.paragraphSmall.copyWith(
-              color: kWhiteColor,
+              color: AppColors.textPrimary,
             ),
           ),
           SizedBox(height: 8.h),
@@ -123,7 +123,7 @@ class _KoinkardInputFieldState extends State<KoinkardInputField> {
           minLines: widget.minLines,
           maxLength: widget.maxLength,
           style: AppTextStyles.bodyMedium.copyWith(
-            color: kWhiteColor,
+            color: AppColors.textPrimary,
           ),
           decoration: InputDecoration(
             hintText: widget.hintText,
@@ -133,13 +133,13 @@ class _KoinkardInputFieldState extends State<KoinkardInputField> {
             filled: true,
             fillColor: inputFillColor,
             hintStyle: AppTextStyles.bodyMedium.copyWith(
-              color: kWhiteColor.withValues(alpha: 0.46),
+              color: AppColors.textPrimary.withValues(alpha: 0.46),
             ),
             helperStyle: AppTextStyles.labelXSmall.copyWith(
-              color: kWhiteColor.withValues(alpha: 0.58),
+              color: AppColors.textPrimary.withValues(alpha: 0.58),
             ),
             errorStyle: AppTextStyles.labelXSmall.copyWith(
-              color: Colors.red.shade300,
+              color: AppColors.inputError,
             ),
             contentPadding: widget.contentPadding ??
                 EdgeInsets.symmetric(
@@ -166,8 +166,8 @@ class _KoinkardInputFieldState extends State<KoinkardInputField> {
             border: _buildBorder(baseBorderColor),
             disabledBorder:
                 _buildBorder(baseBorderColor.withValues(alpha: 0.08)),
-            errorBorder: _buildBorder(Colors.red.shade300),
-            focusedErrorBorder: _buildBorder(Colors.red.shade300),
+            errorBorder: _buildBorder(AppColors.inputError),
+            focusedErrorBorder: _buildBorder(AppColors.inputError),
           ),
         ),
       ],
@@ -193,7 +193,7 @@ class _KoinkardInputFieldState extends State<KoinkardInputField> {
           _obscureText
               ? Icons.visibility_off_outlined
               : Icons.visibility_outlined,
-          color: kWhiteColor.withValues(alpha: 0.72),
+          color: AppColors.textPrimary.withValues(alpha: 0.72),
           size: 20.sp,
         ),
       );

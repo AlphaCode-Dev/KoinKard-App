@@ -1,43 +1,27 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
-import 'package:koinkard/app/app.bottomsheets.dart';
-import 'package:koinkard/app/app.locator.dart';
-import 'package:koinkard/ui/common/app_strings.dart';
 import 'package:koinkard/ui/views/home/home_viewmodel.dart';
-
-import '../helpers/test_helpers.dart';
 
 void main() {
   HomeViewModel getModel() => HomeViewModel();
 
-  group('HomeViewmodelTest -', () {
-    setUp(() => registerServices());
-    tearDown(() => locator.reset());
+  group('HomeViewModel -', () {
+    test('exposes the expected greeting and profile summary', () {
+      final model = getModel();
 
-    group('incrementCounter -', () {
-      test('When called once should return  Counter is: 1', () {
-        final model = getModel();
-        model.incrementCounter();
-        expect(model.counterLabel, 'Counter is: 1');
-      });
+      expect(model.greeting, 'Good morning!');
+      expect(model.userName, 'Adebanji');
+      expect(model.balanceLabel, 'Total Balance');
+      expect(model.balance, '₦56,893.30');
     });
 
-    group('showBottomSheet -', () {
-      test(
-        'When called, should show custom bottom sheet using notice variant',
-        () {
-          final bottomSheetService = getAndRegisterBottomSheetService();
+    test('provides three quick actions and four crypto shortcuts', () {
+      final model = getModel();
 
-          final model = getModel();
-          model.showBottomSheet();
-          verify(
-            bottomSheetService.showCustomSheet(
-              variant: BottomSheetType.notice,
-              title: ksHomeBottomSheetTitle,
-              description: ksHomeBottomSheetDescription,
-            ),
-          );
-        },
+      expect(model.quickActions.length, 3);
+      expect(model.quickActions.first.label, 'Deposit');
+      expect(
+        model.cryptoShortcuts.map((shortcut) => shortcut.title),
+        ['Bitcoin', 'Ethereum', 'USDT', 'USDC'],
       );
     });
   });

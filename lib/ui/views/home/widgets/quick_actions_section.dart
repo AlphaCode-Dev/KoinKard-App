@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:koinkard/ui/common/app_colors.dart';
-import 'package:koinkard/ui/common/app_textstyles.dart';
+import 'package:koinkard/common/app_colors.dart';
+import 'package:koinkard/common/app_textstyles.dart';
 
 class QuickActionsSection extends StatelessWidget {
   const QuickActionsSection({super.key});
@@ -54,11 +54,11 @@ class QuickActionItem extends StatelessWidget {
           height: 66,
           decoration: const BoxDecoration(
             shape: BoxShape.circle,
-            color: Color(0xFF17191D),
+            color: AppColors.actionSurface,
           ),
           child: Icon(
             icon,
-            color: kWhiteColor,
+            color: AppColors.textPrimary,
             size: 28,
           ),
         ),
@@ -66,10 +66,8 @@ class QuickActionItem extends StatelessWidget {
         Text(
           label,
           textAlign: TextAlign.center,
-          style: AppTextStyles.paragraphSmall.copyWith(
-            color: kWhiteColor,
-            height: 1.3,
-          ),
+          style: AppTextStyles.quickActionDescription
+              .copyWith(color: AppColors.textPrimary),
         ),
       ],
     );

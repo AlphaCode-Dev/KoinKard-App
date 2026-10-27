@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:koinkard/ui/common/app_asset.dart';
+import 'package:koinkard/common/app_assets.dart';
 
 import '../widgets/onboarding_illustration_widgets.dart';
 import '../widgets/onboarding_page_template.dart';
@@ -28,7 +28,7 @@ class OnboardingBillPaymentScreen extends StatelessWidget {
       illustration: OnboardingIllustrationFrame(
         child: Image.asset(
           AppAssets.onboardingphonebills,
-          width: 250,
+          width: 290,
           fit: BoxFit.contain,
         ),
       ),

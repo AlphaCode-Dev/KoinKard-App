@@ -32,6 +32,12 @@ class ApiException implements Exception {
     }
 
     final baseUrl = error.requestOptions.baseUrl;
+    final rawMessage = error.message?.trim() ?? '';
+
+    if (_isCleartextBlocked(rawMessage)) {
+      return 'HTTP connections are blocked on this Android build for $baseUrl.'
+          ' Allow cleartext traffic for local development or switch the API to HTTPS.';
+    }
 
     switch (error.type) {
       case DioExceptionType.connectionTimeout:
@@ -49,8 +55,17 @@ class ApiException implements Exception {
       case DioExceptionType.badResponse:
         return 'The server returned an unexpected response.';
       case DioExceptionType.unknown:
+        if (rawMessage.isNotEmpty) {
+          return 'Request failed: $rawMessage';
+        }
         return 'Something went wrong. Please try again.';
     }
+  }
+
+  static bool _isCleartextBlocked(String message) {
+    final normalized = message.toLowerCase();
+    return normalized.contains('cleartext') &&
+        normalized.contains('not permitted');
   }
 
   static String? _readMessage(Map<String, dynamic> responseData) {

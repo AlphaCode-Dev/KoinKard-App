@@ -1,94 +1,75 @@
-import 'package:koinkard/app/app.bottomsheets.dart';
-import 'package:koinkard/app/app.dialogs.dart';
-import 'package:koinkard/app/app.locator.dart';
-import 'package:koinkard/ui/common/app_strings.dart';
+import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
+import 'package:koinkard/common/app_assets.dart';
+
+import 'models/popular_card.dart';
 
 class HomeViewModel extends BaseViewModel {
-  final _dialogService = locator<DialogService>();
-  final _bottomSheetService = locator<BottomSheetService>();
+  final List<DashboardAction> quickActions = const [
+    DashboardAction(
+      label: 'Deposit',
+      icon: Icons.south_west_rounded,
+      highlighted: true,
+    ),
+    DashboardAction(label: 'Transfer', icon: Icons.sync_alt_rounded),
+    DashboardAction(label: 'Earn', icon: Icons.savings_outlined),
+  ];
 
-  String get counterLabel => 'Counter is: $_counter';
-
-  final List<AssetBalanceData> _assetBalances = const [
-    AssetBalanceData(
-      currency: 'USD',
-      amount: '0.00',
-      pnlAmount: '0.00',
-      pnlPercent: '0.00%',
+  final List<CryptoShortcut> cryptoShortcuts = const [
+    CryptoShortcut(
+      title: 'Bitcoin',
+      imageAsset: AppAssets.bitcoin,
     ),
-    AssetBalanceData(
-      currency: 'NGN',
-      amount: '0.00',
-      pnlAmount: '0.00',
-      pnlPercent: '0.00%',
+    CryptoShortcut(
+      title: 'Ethereum',
+      imageAsset: AppAssets.ethereum,
     ),
-    AssetBalanceData(
-      currency: 'EUR',
-      amount: '0.00',
-      pnlAmount: '0.00',
-      pnlPercent: '0.00%',
+    CryptoShortcut(
+      title: 'USDT',
+      imageAsset: AppAssets.usdt,
     ),
-    AssetBalanceData(
-      currency: 'GBP',
-      amount: '0.00',
-      pnlAmount: '0.00',
-      pnlPercent: '0.00%',
+    CryptoShortcut(
+      title: 'USDC',
+      imageAsset: AppAssets.usdc,
     ),
   ];
 
-  int _counter = 0;
-  String _selectedCurrency = 'USD';
+  final List<PopularCard> popularCards = const [
+    PopularCard(name: 'Chime', rate: '₦1,194.76'),
+    PopularCard(name: 'Apple (iTunes)', rate: '₦1,235.22'),
+    PopularCard(name: 'Steam', rate: '₦1,330.99'),
+    PopularCard(name: 'Razer Gold', rate: '₦1,123.82'),
+    PopularCard(name: 'Sephora', rate: '₦1,119.91'),
+    PopularCard(name: 'eBay', rate: '₦732.92'),
+    PopularCard(name: 'Nordstrom', rate: '₦879.51'),
+  ];
 
-  List<String> get supportedCurrencies =>
-      _assetBalances.map((balance) => balance.currency).toList();
-
-  String get selectedCurrency => _selectedCurrency;
-
-  AssetBalanceData get selectedAssetBalance => _assetBalances.firstWhere(
-        (balance) => balance.currency == _selectedCurrency,
-        orElse: () => _assetBalances.first,
-      );
-
-  void selectCurrency(String? currency) {
-    if (currency == null || currency == _selectedCurrency) return;
-    _selectedCurrency = currency;
-    rebuildUi();
-  }
-
-  void incrementCounter() {
-    _counter++;
-    rebuildUi();
-  }
-
-  void showDialog() {
-    _dialogService.showCustomDialog(
-      variant: DialogType.infoAlert,
-      title: 'Stacked Rocks!',
-      description: 'Give stacked $_counter stars on Github',
-    );
-  }
-
-  void showBottomSheet() {
-    _bottomSheetService.showCustomSheet(
-      variant: BottomSheetType.notice,
-      title: ksHomeBottomSheetTitle,
-      description: ksHomeBottomSheetDescription,
-    );
-  }
+  String get greeting => 'Good morning!';
+  String get userName => 'Adebanji';
+  String get balanceLabel => 'Total Balance';
+  String get balance => '₦56,893.30';
+  String get profit => '+₦20,837.90';
+  String get profitPercent => '+14.56%';
 }
 
-class AssetBalanceData {
-  const AssetBalanceData({
-    required this.currency,
-    required this.amount,
-    required this.pnlAmount,
-    required this.pnlPercent,
+class DashboardAction {
+  const DashboardAction({
+    required this.label,
+    required this.icon,
+    this.highlighted = false,
   });
 
-  final String currency;
-  final String amount;
-  final String pnlAmount;
-  final String pnlPercent;
+  final String label;
+  final IconData icon;
+  final bool highlighted;
+}
+
+class CryptoShortcut {
+  const CryptoShortcut({
+    required this.title,
+    required this.imageAsset,
+  });
+
+  final String title;
+  final String imageAsset;
 }

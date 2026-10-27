@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:koinkard/ui/common/app_colors.dart';
-import 'package:koinkard/ui/common/app_textstyles.dart';
+import 'package:koinkard/common/app_colors.dart';
+import 'package:koinkard/common/app_textstyles.dart';
 
 class ProfilePreferencesCard extends StatelessWidget {
   const ProfilePreferencesCard({
@@ -23,18 +23,17 @@ class ProfilePreferencesCard extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(28),
-        color: const Color(0xFF101112),
-        border: Border.all(color: kWhiteColor.withValues(alpha: 0.06)),
+        color: AppColors.cardSurface,
+        border:
+            Border.all(color: AppColors.textPrimary.withValues(alpha: 0.06)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             'Preferences',
-            style: AppTextStyles.headingXSmall.copyWith(
-              color: kWhiteColor,
-              fontSize: 22,
-            ),
+            style: AppTextStyles.cardHeading
+                .copyWith(color: AppColors.textPrimary),
           ),
           const SizedBox(height: 16),
           _PreferenceTile(
@@ -79,7 +78,7 @@ class _PreferenceTile extends StatelessWidget {
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: kWhiteColor.withValues(alpha: 0.04),
+        color: AppColors.textPrimary.withValues(alpha: 0.04),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,11 +88,11 @@ class _PreferenceTile extends StatelessWidget {
             height: 40,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: kOrangeColor.withValues(alpha: 0.14),
+              color: AppColors.primary.withValues(alpha: 0.14),
             ),
             child: Icon(
               icon,
-              color: kOrangeColor,
+              color: AppColors.primary,
               size: 20,
             ),
           ),
@@ -105,16 +104,14 @@ class _PreferenceTile extends StatelessWidget {
                 Text(
                   title,
                   style: AppTextStyles.paragraphMedium.copyWith(
-                    color: kWhiteColor,
+                    color: AppColors.textPrimary,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   subtitle,
-                  style: AppTextStyles.bodyMedium.copyWith(
-                    color: kWhiteColor.withValues(alpha: 0.56),
-                    height: 1.5,
-                  ),
+                  style: AppTextStyles.preferenceDescription.copyWith(
+                      color: AppColors.textPrimary.withValues(alpha: 0.56)),
                 ),
               ],
             ),
@@ -122,10 +119,10 @@ class _PreferenceTile extends StatelessWidget {
           Switch(
             value: value,
             onChanged: onChanged,
-            activeThumbColor: kOrangeColor,
-            activeTrackColor: kOrangeColor.withValues(alpha: 0.35),
-            inactiveThumbColor: kWhiteColor.withValues(alpha: 0.72),
-            inactiveTrackColor: kWhiteColor.withValues(alpha: 0.16),
+            activeThumbColor: AppColors.primary,
+            activeTrackColor: AppColors.primary.withValues(alpha: 0.35),
+            inactiveThumbColor: AppColors.textPrimary.withValues(alpha: 0.72),
+            inactiveTrackColor: AppColors.textPrimary.withValues(alpha: 0.16),
           ),
         ],
       ),

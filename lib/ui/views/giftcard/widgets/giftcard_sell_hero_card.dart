@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:koinkard/ui/common/app_asset.dart';
-import 'package:koinkard/ui/common/app_colors.dart';
-import 'package:koinkard/ui/common/app_textstyles.dart';
+import 'package:koinkard/common/app_assets.dart';
+import 'package:koinkard/common/app_colors.dart';
+import 'package:koinkard/common/app_textstyles.dart';
 
 class GiftcardSellHeroCard extends StatelessWidget {
   const GiftcardSellHeroCard({super.key});
@@ -17,13 +17,13 @@ class GiftcardSellHeroCard extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            const Color(0xFF18120E),
-            kOrangeColor.withValues(alpha: 0.22),
-            const Color(0xFF101112),
+            AppColors.giftcardGradientStart,
+            AppColors.primary.withValues(alpha: 0.22),
+            AppColors.cardSurface,
           ],
         ),
         border: Border.all(
-          color: kWhiteColor.withValues(alpha: 0.06),
+          color: AppColors.textPrimary.withValues(alpha: 0.06),
         ),
       ),
       child: Stack(
@@ -36,7 +36,7 @@ class GiftcardSellHeroCard extends StatelessWidget {
               height: 120,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: kOrangeColor.withValues(alpha: 0.08),
+                color: AppColors.primary.withValues(alpha: 0.08),
               ),
             ),
           ),
@@ -51,19 +51,15 @@ class GiftcardSellHeroCard extends StatelessWidget {
                       children: [
                         Text(
                           'High-value cards.\nInstant conversion.',
-                          style: AppTextStyles.headingXSmall.copyWith(
-                            color: kWhiteColor,
-                            fontSize: 23,
-                            height: 1.25,
-                          ),
+                          style: AppTextStyles.giftcardHeroHeading
+                              .copyWith(color: AppColors.textPrimary),
                         ),
                         const SizedBox(height: 12),
                         Text(
                           'Sell Amazon, Steam, iTunes, Visa and more from one secure KoinKard trade desk.',
-                          style: AppTextStyles.bodyMedium.copyWith(
-                            color: kWhiteColor.withValues(alpha: 0.64),
-                            height: 1.6,
-                          ),
+                          style: AppTextStyles.bodyMessage.copyWith(
+                              color: AppColors.textPrimary
+                                  .withValues(alpha: 0.64)),
                         ),
                       ],
                     ),
@@ -78,7 +74,7 @@ class GiftcardSellHeroCard extends StatelessWidget {
                         Transform.rotate(
                           angle: -0.22,
                           child: _MiniGiftCard(
-                            color: const Color(0xFF1D1E22),
+                            color: AppColors.giftcardGradientEnd,
                             child: Image.asset(
                               AppAssets.giftcardshow,
                               fit: BoxFit.contain,
@@ -88,10 +84,10 @@ class GiftcardSellHeroCard extends StatelessWidget {
                         Transform.rotate(
                           angle: 0.14,
                           child: _MiniGiftCard(
-                            color: kOrangeColor.withValues(alpha: 0.18),
+                            color: AppColors.primary.withValues(alpha: 0.18),
                             child: Icon(
                               Icons.redeem_rounded,
-                              color: kOrangeColor,
+                              color: AppColors.primary,
                               size: 34,
                             ),
                           ),
@@ -152,10 +148,11 @@ class _MiniGiftCard extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(18),
         color: color,
-        border: Border.all(color: kWhiteColor.withValues(alpha: 0.08)),
+        border:
+            Border.all(color: AppColors.textPrimary.withValues(alpha: 0.08)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.2),
+            color: AppColors.background.withValues(alpha: 0.2),
             blurRadius: 12,
             offset: const Offset(0, 8),
           ),
@@ -181,7 +178,7 @@ class _HeroStatChip extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(18),
-        color: kWhiteColor.withValues(alpha: 0.04),
+        color: AppColors.textPrimary.withValues(alpha: 0.04),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -189,14 +186,14 @@ class _HeroStatChip extends StatelessWidget {
           Text(
             label,
             style: AppTextStyles.labelXSmall.copyWith(
-              color: kWhiteColor.withValues(alpha: 0.5),
+              color: AppColors.textPrimary.withValues(alpha: 0.5),
             ),
           ),
           const SizedBox(height: 8),
           Text(
             value,
             style: AppTextStyles.paragraphMedium.copyWith(
-              color: kWhiteColor,
+              color: AppColors.textPrimary,
             ),
           ),
         ],

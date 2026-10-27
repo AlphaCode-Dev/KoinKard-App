@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:koinkard/ui/common/app_colors.dart';
-import 'package:koinkard/ui/common/app_textstyles.dart';
+import 'package:koinkard/common/app_colors.dart';
+import 'package:koinkard/common/app_textstyles.dart';
 
 class ProfileAccountStats extends StatelessWidget {
   const ProfileAccountStats({super.key});
@@ -54,8 +54,9 @@ class _StatCard extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(22),
-        color: const Color(0xFF101112),
-        border: Border.all(color: kWhiteColor.withValues(alpha: 0.06)),
+        color: AppColors.cardSurface,
+        border:
+            Border.all(color: AppColors.textPrimary.withValues(alpha: 0.06)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,27 +66,25 @@ class _StatCard extends StatelessWidget {
             height: 40,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: kOrangeColor.withValues(alpha: 0.14),
+              color: AppColors.primary.withValues(alpha: 0.14),
             ),
             child: Icon(
               icon,
-              color: kOrangeColor,
+              color: AppColors.primary,
               size: 21,
             ),
           ),
           const SizedBox(height: 16),
           Text(
             value,
-            style: AppTextStyles.headingXSmall.copyWith(
-              color: kWhiteColor,
-              fontSize: 21,
-            ),
+            style: AppTextStyles.accountStat
+                .copyWith(color: AppColors.textPrimary),
           ),
           const SizedBox(height: 4),
           Text(
             title,
             style: AppTextStyles.labelXSmall.copyWith(
-              color: kWhiteColor.withValues(alpha: 0.58),
+              color: AppColors.textPrimary.withValues(alpha: 0.58),
             ),
           ),
         ],

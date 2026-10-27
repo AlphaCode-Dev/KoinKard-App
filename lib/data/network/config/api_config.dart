@@ -6,6 +6,7 @@ class ApiConfig {
   static const String _localBackendUrl = 'http://127.0.0.1:8000';
   static const String _androidUsbReverseBackendUrl = 'http://127.0.0.1:8000';
   static const String _androidEmulatorBackendUrl = 'http://10.0.2.2:8000';
+  static const String _defaultAndroidLanApiHost = '192.168.0.116';
 
   static const String _apiBaseUrlOverride = String.fromEnvironment(
     'API_BASE_URL',
@@ -14,12 +15,12 @@ class ApiConfig {
 
   static const String _androidApiMode = String.fromEnvironment(
     'ANDROID_API_MODE',
-    defaultValue: 'usb',
+    defaultValue: 'lan',
   );
 
   static const String _androidLanApiHost = String.fromEnvironment(
     'ANDROID_LAN_API_HOST',
-    defaultValue: '',
+    defaultValue: _defaultAndroidLanApiHost,
   );
 
   static String get baseUrl {
@@ -47,13 +48,14 @@ class ApiConfig {
   static const Duration sendTimeout = Duration(seconds: 30);
 
   static String _resolveAndroidBaseUrl() {
+    if (_androidLanApiHost.isNotEmpty) {
+      return _buildLanBaseUrl(_androidLanApiHost);
+    }
+
     switch (_androidApiMode.toLowerCase().trim()) {
       case 'emulator':
         return _androidEmulatorBackendUrl;
       case 'lan':
-        if (_androidLanApiHost.isNotEmpty) {
-          return _buildLanBaseUrl(_androidLanApiHost);
-        }
         return _androidUsbReverseBackendUrl;
       case 'usb':
       case 'reverse':

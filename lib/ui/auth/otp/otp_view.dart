@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:koinkard/ui/auth/register/widgets/register_brand_header.dart';
-import 'package:koinkard/ui/common/app_colors.dart';
-import 'package:koinkard/ui/common/app_textstyles.dart';
+import 'package:koinkard/common/app_colors.dart';
+import 'package:koinkard/common/app_textstyles.dart';
 import 'package:koinkard/ui/widgets/commons/koinkardbutton.dart';
 import 'package:koinkard/ui/widgets/commons/koinkardotpfield.dart';
 import 'package:stacked/stacked.dart';
@@ -18,7 +18,7 @@ class OtpView extends StackedView<OtpViewModel> {
     Widget? child,
   ) {
     return Scaffold(
-      backgroundColor: kDarkColor,
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -27,7 +27,7 @@ class OtpView extends StackedView<OtpViewModel> {
               Container(
                 width: double.infinity,
                 decoration: const BoxDecoration(
-                  color: Color(0xFF0D0F0F),
+                  color: AppColors.authSurface,
                   borderRadius: BorderRadius.vertical(
                     top: Radius.circular(28),
                   ),
@@ -43,7 +43,7 @@ class OtpView extends StackedView<OtpViewModel> {
                             onPressed: () => Navigator.of(context).maybePop(),
                             icon: const Icon(
                               Icons.arrow_back_rounded,
-                              color: kWhiteColor,
+                              color: AppColors.textPrimary,
                               size: 28,
                             ),
                             padding: EdgeInsets.zero,
@@ -54,10 +54,8 @@ class OtpView extends StackedView<OtpViewModel> {
                             onPressed: viewModel.goToLogin,
                             child: Text(
                               'Back to Login',
-                              style: AppTextStyles.paragraphSmall.copyWith(
-                                color: kOrangeColor,
-                                fontWeight: FontWeight.w500,
-                              ),
+                              style: AppTextStyles.paragraphSmallMedium
+                                  .copyWith(color: AppColors.primary),
                             ),
                           ),
                         ],
@@ -66,24 +64,23 @@ class OtpView extends StackedView<OtpViewModel> {
                       Text(
                         'Enter verification code',
                         style: AppTextStyles.headingSmall.copyWith(
-                          color: kWhiteColor,
+                          color: AppColors.textPrimary,
                         ),
                       ),
                       const SizedBox(height: 12),
                       Text(
                         'We sent a 6-digit code to your email or mobile number. Enter it below to continue with your KoinKard account.',
-                        style: AppTextStyles.bodyMedium.copyWith(
-                          color: kWhiteColor.withValues(alpha: 0.68),
-                          height: 1.7,
-                        ),
+                        style: AppTextStyles.authDescription.copyWith(
+                            color:
+                                AppColors.textPrimary.withValues(alpha: 0.68)),
                       ),
                       const SizedBox(height: 30),
                       KoinkardOtpField(
                         label: 'Verification Code',
                         autofocus: true,
-                        fillColor: const Color(0xFF1A1B22),
-                        borderColor: Colors.transparent,
-                        activeBorderColor: kOrangeColor,
+                        fillColor: AppColors.inputSurface,
+                        borderColor: AppColors.transparent,
+                        activeBorderColor: AppColors.primary,
                         onChanged: viewModel.updateOtp,
                         onCompleted: viewModel.updateOtp,
                       ),
@@ -91,7 +88,7 @@ class OtpView extends StackedView<OtpViewModel> {
                       KoinkardPrimaryButton(
                         text: 'Verify Code',
                         height: 66,
-                        textColor: kWhiteColor,
+                        textColor: AppColors.textPrimary,
                         onTap: viewModel.otpCode.length == 6 ? () {} : null,
                       ),
                       const SizedBox(height: 18),
@@ -102,7 +99,8 @@ class OtpView extends StackedView<OtpViewModel> {
                           onPressed: viewModel.resendCode,
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(
-                              color: kWhiteColor.withValues(alpha: 0.18),
+                              color:
+                                  AppColors.textPrimary.withValues(alpha: 0.18),
                             ),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(32),
@@ -110,10 +108,8 @@ class OtpView extends StackedView<OtpViewModel> {
                           ),
                           child: Text(
                             'Resend Code',
-                            style: AppTextStyles.paragraphMedium.copyWith(
-                              color: kWhiteColor,
-                              fontWeight: FontWeight.w600,
-                            ),
+                            style: AppTextStyles.paragraphMedium
+                                .copyWith(color: AppColors.textPrimary),
                           ),
                         ),
                       ),
@@ -127,20 +123,19 @@ class OtpView extends StackedView<OtpViewModel> {
                             Text(
                               'Didn\'t get the code?',
                               style: AppTextStyles.paragraphSmall.copyWith(
-                                color: kWhiteColor.withValues(alpha: 0.52),
+                                color: AppColors.textPrimary
+                                    .withValues(alpha: 0.52),
                               ),
                             ),
                             TextButton(
                               onPressed: viewModel.resendCode,
                               style: TextButton.styleFrom(
-                                foregroundColor: kOrangeColor,
+                                foregroundColor: AppColors.primary,
                               ),
                               child: Text(
                                 'Send Again',
-                                style: AppTextStyles.paragraphMedium.copyWith(
-                                  color: kOrangeColor,
-                                  fontWeight: FontWeight.w700,
-                                ),
+                                style: AppTextStyles.paragraphMediumBold
+                                    .copyWith(color: AppColors.primary),
                               ),
                             ),
                           ],

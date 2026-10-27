@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../common/app_colors.dart';
+import 'package:koinkard/common/app_colors.dart';
 
 class OnboardingBackground extends StatelessWidget {
   const OnboardingBackground({super.key});
@@ -13,9 +13,9 @@ class OnboardingBackground extends StatelessWidget {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            kDarkColor,
-            const Color(0xFF111111),
-            kDarkColor,
+            AppColors.background,
+            AppColors.darkText,
+            AppColors.background,
           ],
         ),
       ),
@@ -26,7 +26,7 @@ class OnboardingBackground extends StatelessWidget {
             left: -80,
             child: _glowOrb(
               size: 280,
-              color: kOrangeColor.withValues(alpha: 0.12),
+              color: AppColors.primary.withValues(alpha: 0.12),
             ),
           ),
           Positioned(
@@ -34,7 +34,7 @@ class OnboardingBackground extends StatelessWidget {
             top: 160,
             child: _glowOrb(
               size: 260,
-              color: kWhiteColor.withValues(alpha: 0.08),
+              color: AppColors.textPrimary.withValues(alpha: 0.08),
             ),
           ),
           Positioned(
@@ -42,7 +42,7 @@ class OnboardingBackground extends StatelessWidget {
             left: 30,
             child: _glowOrb(
               size: 240,
-              color: kOrangeColor.withValues(alpha: 0.10),
+              color: AppColors.primary.withValues(alpha: 0.10),
             ),
           ),
           const Positioned(top: 86, left: 36, child: _Twinkle(size: 10)),
@@ -66,7 +66,7 @@ class OnboardingBackground extends StatelessWidget {
           gradient: RadialGradient(
             colors: [
               color,
-              Colors.transparent,
+              AppColors.transparent,
             ],
           ),
         ),
@@ -89,11 +89,11 @@ class _Twinkle extends StatelessWidget {
         height: size,
         child: DecoratedBox(
           decoration: BoxDecoration(
-            color: kWhiteColor,
+            color: AppColors.textPrimary,
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: kWhiteColor.withValues(alpha: 0.35),
+                color: AppColors.textPrimary.withValues(alpha: 0.35),
                 blurRadius: 8,
                 spreadRadius: 2,
               ),
