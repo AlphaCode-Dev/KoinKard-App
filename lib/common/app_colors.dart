@@ -87,6 +87,9 @@ class AppColors {
   static const Color telegram = Color(0xFF229ED9);
   static const Color profileProtectionSurface = Color(0xFF0E0F10);
 
+  static const Color transferNoFeeSurface = Color(0xFFFFA200);
+  static const Color transferNoFeeBorder = transferNoFeeSurface;
+
   // Legacy names retained for compatibility.
   static const Color kcprylblack = Color(0xFF0b090a);
   static const Color bkgrnd = Color(0xFFf1e4f3);

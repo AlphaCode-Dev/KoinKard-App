@@ -11,6 +11,7 @@ import 'package:koinkard/common/app_textstyles.dart';
 import 'package:stacked/stacked.dart';
 
 import '../receipts/receipts_view.dart';
+import '../transfer/transfer_view.dart';
 import 'widgets/home_top_background.dart';
 import 'widgets/popular_cards_section.dart';
 import 'home_viewmodel.dart';
@@ -104,7 +105,16 @@ class HomeView extends StackedView<HomeViewModel> {
                         children: viewModel.quickActions
                             .map(
                               (action) => Expanded(
-                                child: _QuickActionCard(action: action),
+                                child: _QuickActionCard(
+                                  action: action,
+                                  onTap: action.label == 'Transfer'
+                                      ? () => Navigator.of(context).push<void>(
+                                            MaterialPageRoute(
+                                                builder: (_) =>
+                                                    const TransferView()),
+                                          )
+                                      : null,
+                                ),
                               ),
                             )
                             .toList(),
@@ -274,40 +284,45 @@ class _RoundIconButton extends StatelessWidget {
 }
 
 class _QuickActionCard extends StatelessWidget {
-  const _QuickActionCard({required this.action});
+  const _QuickActionCard({required this.action, this.onTap});
 
   final DashboardAction action;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          width: 56,
-          height: 56,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: action.highlighted
-                ? AppColors.primary
-                : AppColors.actionSurface,
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(16),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 56,
+            height: 56,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: action.highlighted
+                  ? AppColors.primary
+                  : AppColors.actionSurface,
+            ),
+            child: Icon(
+              action.icon,
+              color: action.highlighted
+                  ? AppColors.background
+                  : AppColors.textPrimary,
+              size: 26,
+            ),
           ),
-          child: Icon(
-            action.icon,
-            color: action.highlighted
-                ? AppColors.background
-                : AppColors.textPrimary,
-            size: 26,
+          const SizedBox(height: 10),
+          Text(
+            action.label,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.quickActionLabel
+                .copyWith(color: AppColors.actionText),
           ),
-        ),
-        const SizedBox(height: 10),
-        Text(
-          action.label,
-          textAlign: TextAlign.center,
-          style: AppTextStyles.quickActionLabel
-              .copyWith(color: AppColors.actionText),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
