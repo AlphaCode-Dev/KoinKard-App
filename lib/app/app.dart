@@ -17,6 +17,7 @@ import 'package:koinkard/ui/views/deposit/deposit_view.dart';
 import 'package:koinkard/ui/views/transfer/transfer_view.dart';
 import 'package:koinkard/ui/views/receipts/receipts_view.dart';
 import 'package:koinkard/ui/views/paybills/paybills_view.dart';
+import 'package:koinkard/ui/views/virtual_card/virtual_card_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -35,6 +36,7 @@ MaterialRoute(page: DepositView),
 MaterialRoute(page: TransferView),
 MaterialRoute(page: ReceiptsView),
 MaterialRoute(page: PaybillsView),
+MaterialRoute(page: VirtualCardView),
 // @stacked-route
   ],
   dependencies: [

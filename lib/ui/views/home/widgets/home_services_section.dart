@@ -3,6 +3,7 @@ import 'package:koinkard/common/app_assets.dart';
 import 'package:koinkard/common/app_colors.dart';
 import 'package:koinkard/common/app_textstyles.dart';
 import '../../paybills/paybills_view.dart';
+import '../../virtual_card/virtual_card_view.dart';
 
 class HomeServicesSection extends StatelessWidget {
   const HomeServicesSection({super.key});
@@ -19,9 +20,14 @@ class HomeServicesSection extends StatelessWidget {
                       MaterialPageRoute(builder: (_) => const PaybillsView()),
                     ))),
         const SizedBox(width: 8),
-        const Expanded(
+        Expanded(
             child: _ServiceTile(
-                label: 'Virtual Card', asset: AppAssets.homeVirtualCard)),
+                label: 'Virtual Card',
+                asset: AppAssets.homeVirtualCard,
+                onTap: () => Navigator.of(context).push<void>(
+                      MaterialPageRoute(
+                          builder: (_) => const VirtualCardView()),
+                    ))),
         const SizedBox(width: 8),
         const Expanded(
             child: _ServiceTile(
@@ -71,8 +77,8 @@ class _ServiceTile extends StatelessWidget {
             ),
             const SizedBox(height: 3),
             Text(label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: AppTextStyles.paragraphSmall.copyWith(
                   color: AppColors.textPrimary,
                   fontSize: 10,
