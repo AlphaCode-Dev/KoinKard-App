@@ -9,6 +9,8 @@ import 'paybills_viewmodel.dart';
 import '../home/widgets/home_top_background.dart';
 import 'widgets/bill_option.dart';
 import 'airtime_view.dart';
+import 'tv_view.dart';
+import 'electricity_view.dart';
 
 class PaybillsView extends StackedView<PaybillsViewModel> {
   const PaybillsView({super.key});
@@ -54,9 +56,19 @@ class PaybillsView extends StackedView<PaybillsViewModel> {
             child: ListView(
               padding: const EdgeInsets.fromLTRB(22, 24, 22, 24),
               children: [
-                const BillOption(
-                    label: 'Electricity', asset: AppAssets.electricity),
-                const BillOption(label: 'TV', asset: AppAssets.television),
+                BillOption(
+                    label: 'Electricity',
+                    asset: AppAssets.electricity,
+                    onTap: () => Navigator.of(context).push<void>(
+                        MaterialPageRoute(
+                            builder: (_) =>
+                                ElectricityView(viewModel: viewModel)))),
+                BillOption(
+                    label: 'TV',
+                    asset: AppAssets.television,
+                    onTap: () => Navigator.of(context).push<void>(
+                        MaterialPageRoute(
+                            builder: (_) => TvView(viewModel: viewModel)))),
                 for (final network in AirtimeNetwork.values)
                   BillOption(
                     label: network.label,

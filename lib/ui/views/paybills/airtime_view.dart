@@ -8,6 +8,8 @@ import '../home/widgets/home_top_background.dart';
 import 'paybills_viewmodel.dart';
 import 'widgets/airtime_network_selector.dart';
 import 'widgets/airtime_top_up.dart';
+import 'widgets/mobile_top_up_selector.dart';
+import 'widgets/data_plan_selector.dart';
 
 class AirtimeView extends StackedView<PaybillsViewModel> {
   const AirtimeView({super.key, required this.viewModel});
@@ -59,8 +61,9 @@ class AirtimeView extends StackedView<PaybillsViewModel> {
               statusBarBrightness: Brightness.light,
             ),
             centerTitle: true,
-            title: const Text('Airtime',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
+            title: Text(viewModel.isData ? 'Data' : 'Airtime',
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
             leading: Padding(
               padding: const EdgeInsets.all(9),
               child: IconButton.filledTonal(
@@ -81,6 +84,11 @@ class AirtimeView extends StackedView<PaybillsViewModel> {
               child: ListView(
                 padding: const EdgeInsets.fromLTRB(22, 16, 22, 28),
                 children: [
+                  MobileTopUpSelector(
+                    selected: viewModel.topUpType,
+                    onChanged: viewModel.selectTopUpType,
+                  ),
+                  const SizedBox(height: 16),
                   AirtimeNetworkSelector(
                       selected: viewModel.network,
                       onChanged: viewModel.selectNetwork),
@@ -135,7 +143,7 @@ class AirtimeView extends StackedView<PaybillsViewModel> {
                     SizedBox(width: 6),
                     Tooltip(
                         message:
-                            'Choose the stablecoin to use for your airtime payment.',
+                            'Choose the stablecoin to use for your payment.',
                         child: Icon(Icons.info,
                             size: 13, color: AppColors.lightIconBorder)),
                   ]),
@@ -178,9 +186,13 @@ class AirtimeView extends StackedView<PaybillsViewModel> {
                     ]),
                   ),
                   const SizedBox(height: 16),
-                  const Text('Top Up', style: TextStyle(fontSize: 14)),
+                  Text(viewModel.isData ? 'Data Plans' : 'Top Up',
+                      style: const TextStyle(fontSize: 14)),
                   const SizedBox(height: 8),
-                  AirtimeTopUp(model: viewModel),
+                  if (viewModel.isData)
+                    DataPlanSelector(model: viewModel)
+                  else
+                    AirtimeTopUp(model: viewModel),
                   const SizedBox(height: 16),
                   SizedBox(
                     height: 54,
@@ -188,16 +200,21 @@ class AirtimeView extends StackedView<PaybillsViewModel> {
                       style: FilledButton.styleFrom(
                           backgroundColor: AppColors.primary,
                           foregroundColor: AppColors.white),
-                      onPressed: () {
-                        FocusScope.of(context).unfocus();
-                        if (!viewModel.formKey.currentState!.validate()) return;
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content: Text(
-                                    'Airtime payments are not available yet.')));
-                      },
-                      child: const Text('Pay',
-                          style: TextStyle(
+                      onPressed: viewModel.isData &&
+                              viewModel.selectedDataPlan == null
+                          ? null
+                          : () {
+                              FocusScope.of(context).unfocus();
+                              if (!viewModel.formKey.currentState!.validate()) {
+                                return;
+                              }
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                  content: Text(viewModel.isData
+                                      ? 'Data payments are not available yet.'
+                                      : 'Airtime payments are not available yet.')));
+                            },
+                      child: Text(viewModel.isData ? 'Buy Data' : 'Pay',
+                          style: const TextStyle(
                               fontSize: 18, fontWeight: FontWeight.w600)),
                     ),
                   ),

@@ -44,6 +44,7 @@ void main() {
     expect(viewContext.mounted, isTrue);
     await screenMatchesGolden(tester, 'airtime_default');
 
+    await tester.ensureVisible(find.text('Pay'));
     await tester.tap(find.text('Pay'));
     await tester.pumpAndSettle();
     expect(find.text('Enter a valid Nigerian phone number.'), findsOneWidget);
@@ -70,6 +71,7 @@ void main() {
               matching: find.byType(Scrollable),
             )
             .first);
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Pay'));
     await tester.pumpAndSettle();
     expect(
@@ -85,6 +87,57 @@ void main() {
     expect(identical(reopened.viewModel, model.viewModel), isTrue);
     expect(reopened.viewModel.network, AirtimeNetwork.mtn);
     expect(reopened.viewModel.amountController.text, '500');
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('Data mode handles unavailable plans and network changes',
+      (tester) async {
+    await loadAppFonts();
+    final model = PaybillsViewModel();
+    model.updateDataPlans([]);
+    addTearDown(model.dispose);
+    const mtnPlan = MobileDataPlan(
+        id: 'test-mtn',
+        network: AirtimeNetwork.mtn,
+        name: 'Test 1 GB',
+        validity: 'Test validity',
+        priceNaira: 100);
+    const airtelPlan = MobileDataPlan(
+        id: 'test-airtel',
+        network: AirtimeNetwork.airtel,
+        name: 'Test 2 GB',
+        validity: 'Test validity',
+        priceNaira: 200);
+    tester.view.physicalSize = const Size(320, 700);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    await tester.pumpWidget(MaterialApp(home: AirtimeView(viewModel: model)));
+    await tester.tap(find.widgetWithText(InkWell, 'Data'));
+    await tester.pumpAndSettle();
+    expect(find.text('MTN data plans'), findsOneWidget);
+    expect(find.byKey(const ValueKey('airtime-amount')), findsNothing);
+    expect(
+        tester
+            .widget<FilledButton>(find.widgetWithText(FilledButton, 'Buy Data'))
+            .onPressed,
+        isNull);
+    model.updateDataPlans([mtnPlan, airtelPlan]);
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text('Test 1 GB'));
+    await tester.tap(find.text('Test 1 GB'));
+    await tester.pumpAndSettle();
+    expect(model.selectedDataPlan, mtnPlan);
+    expect(find.text('Test 2 GB'), findsNothing);
+    model.selectNetwork(AirtimeNetwork.airtel);
+    await tester.pumpAndSettle();
+    expect(model.selectedDataPlan, isNull);
+    expect(find.text('Test 2 GB'), findsOneWidget);
+    model.selectAmount(500);
+    model.selectTopUpType(MobileTopUpType.airtime);
+    await tester.pumpAndSettle();
+    expect(model.amountController.text, '500');
+    expect(find.byKey(const ValueKey('airtime-amount')), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 }
