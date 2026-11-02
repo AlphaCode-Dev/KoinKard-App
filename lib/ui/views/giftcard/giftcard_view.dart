@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:koinkard/common/app_colors.dart';
+import 'package:koinkard/ui/widgets/commons/striped_background.dart';
 import 'package:stacked/stacked.dart';
 
 import 'giftcard_viewmodel.dart';
@@ -15,21 +17,26 @@ class GiftcardView extends StackedView<GiftcardViewModel> {
     GiftcardViewModel viewModel,
     Widget? child,
   ) {
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: GiftcardSellHeader(),
-              ),
-              const SizedBox(height: 24),
-              Expanded(child: GiftcardGrid(cards: viewModel.cardBrands)),
-            ],
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: const SystemUiOverlayStyle(
+        statusBarColor: AppColors.transparent,
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.light,
+      ),
+      child: Scaffold(
+        backgroundColor: AppColors.lightGradientTop,
+        body: StripedBackground(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          borderRadius: BorderRadius.zero,
+          child: SafeArea(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const GiftcardSellHeader(),
+                const SizedBox(height: 24),
+                Expanded(child: GiftcardGrid(cards: viewModel.cardBrands)),
+              ],
+            ),
           ),
         ),
       ),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:koinkard/common/app_assets.dart';
 import 'package:koinkard/common/app_colors.dart';
 import 'package:koinkard/common/app_textstyles.dart';
-import 'package:koinkard/ui/widgets/commons/striped_background.dart';
 
 import '../sell/sell_giftcard_view.dart';
 
@@ -13,19 +12,16 @@ class GiftcardGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StripedBackground(
-      borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-      child: GridView.builder(
-        padding: EdgeInsets.zero,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 12,
-          mainAxisSpacing: 12,
-          mainAxisExtent: 164,
-        ),
-        itemCount: cards.length,
-        itemBuilder: (context, index) => _GiftcardTile(name: cards[index]),
+    return GridView.builder(
+      padding: EdgeInsets.zero,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 12,
+        mainAxisSpacing: 12,
+        mainAxisExtent: 164,
       ),
+      itemCount: cards.length,
+      itemBuilder: (context, index) => _GiftcardTile(name: cards[index]),
     );
   }
 }

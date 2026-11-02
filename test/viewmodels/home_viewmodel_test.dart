@@ -5,6 +5,19 @@ void main() {
   HomeViewModel getModel() => HomeViewModel();
 
   group('HomeViewModel -', () {
+    test('toggles balance visibility and notifies the screen', () {
+      final model = getModel();
+      var notifications = 0;
+      model.addListener(() => notifications++);
+
+      expect(model.balanceVisible, isTrue);
+      model.toggleBalanceVisibility();
+      expect(model.balanceVisible, isFalse);
+      model.toggleBalanceVisibility();
+      expect(model.balanceVisible, isTrue);
+      expect(notifications, 2);
+    });
+
     test('exposes the expected greeting and profile summary', () {
       final model = getModel();
 

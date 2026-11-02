@@ -246,10 +246,16 @@ void main() {
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
-    await tester.pumpWidget(_app(const PopularCardsSection(cards: [
-      PopularCard(name: 'Apple (iTunes)', rate: '1100'),
-    ])));
+    var seeAllTapped = false;
+    await tester.pumpWidget(_app(PopularCardsSection(
+      cards: const [
+        PopularCard(name: 'Apple (iTunes)', rate: '1100'),
+      ],
+      onSeeAll: () => seeAllTapped = true,
+    )));
     await tester.pumpAndSettle();
+    await tester.tap(find.text('See all'));
+    expect(seeAllTapped, isTrue);
     await tester.tap(find.text('Apple (iTunes)'));
     await tester.pumpAndSettle();
     expect(find.byType(SellGiftcardView), findsOneWidget);

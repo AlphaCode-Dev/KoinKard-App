@@ -20,7 +20,7 @@ class BottomnavbarView extends StackedView<BottomnavbarViewModel> {
     Widget? child,
   ) {
     final pages = [
-      const HomeView(),
+      HomeView(onSeeAllCards: () => viewModel.selectTab(3)),
       const RatesView(),
       const TradeView(),
       const GiftcardView(),
@@ -35,7 +35,9 @@ class BottomnavbarView extends StackedView<BottomnavbarViewModel> {
           if (!viewModel.hasVisitedTab(index)) {
             return const SizedBox.shrink();
           }
-          return index == 0 ? pages[index] : SafeArea(child: pages[index]);
+          return index == 0 || index == 3
+              ? pages[index]
+              : SafeArea(child: pages[index]);
         }),
       ),
       bottomNavigationBar: SafeArea(

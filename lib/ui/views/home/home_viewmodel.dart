@@ -5,6 +5,15 @@ import 'package:koinkard/common/app_assets.dart';
 import 'models/popular_card.dart';
 
 class HomeViewModel extends BaseViewModel {
+  bool _balanceVisible = true;
+
+  bool get balanceVisible => _balanceVisible;
+
+  void toggleBalanceVisibility() {
+    _balanceVisible = !_balanceVisible;
+    notifyListeners();
+  }
+
   final List<DashboardAction> quickActions = const [
     DashboardAction(
       label: 'Deposit',

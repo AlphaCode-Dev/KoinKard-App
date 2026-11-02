@@ -33,5 +33,14 @@ void main() {
     expect(tester.takeException(), isNull);
 
     await screenMatchesGolden(tester, 'home_view_default');
+
+    await tester.tap(find.byTooltip('Hide balance'));
+    await tester.pumpAndSettle();
+    expect(find.byTooltip('Show balance'), findsOneWidget);
+    expect(find.text('₦56,893.30'), findsNothing);
+
+    tester.view.physicalSize = const Size(320, 700);
+    await tester.pumpAndSettle();
+    expect(tester.takeException(), isNull);
   });
 }

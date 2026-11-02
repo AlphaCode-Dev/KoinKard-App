@@ -13,14 +13,14 @@ class GiftcardSellHeader extends StatelessWidget {
         Text(
           'Trade Gift Cards',
           style: AppTextStyles.giftcardHeading.copyWith(
-            color: AppColors.textPrimary,
+            color: AppColors.headingOnLight,
           ),
         ),
         const SizedBox(height: 8),
         Text(
           'Turn your unused gift cards into cash, all in one place.',
           style: AppTextStyles.sectionDescription.copyWith(
-            color: AppColors.textPrimary.withValues(alpha: 0.62),
+            color: AppColors.balanceLabel,
           ),
         ),
       ],

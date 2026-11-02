@@ -12,12 +12,16 @@ import 'package:stacked/stacked.dart';
 
 import '../receipts/receipts_view.dart';
 import '../transfer/transfer_view.dart';
+import '../giftcard/giftcard_view.dart';
 import 'widgets/home_top_background.dart';
 import 'widgets/popular_cards_section.dart';
+import 'widgets/home_services_section.dart';
 import 'home_viewmodel.dart';
 
 class HomeView extends StackedView<HomeViewModel> {
-  const HomeView({super.key});
+  const HomeView({super.key, this.onSeeAllCards});
+
+  final VoidCallback? onSeeAllCards;
 
   @override
   Widget builder(BuildContext context, HomeViewModel viewModel, Widget? child) {
@@ -30,132 +34,149 @@ class HomeView extends StackedView<HomeViewModel> {
       child: Scaffold(
         backgroundColor: AppColors.background,
         extendBodyBehindAppBar: true,
-        body: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                AppColors.homeGradientTop,
-                AppColors.homeGradientMiddle,
-                AppColors.background,
-              ],
-            ),
-          ),
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.only(bottom: 120),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                HomeTopBackground(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _HomeTopBar(viewModel: viewModel),
-                      const SizedBox(height: 28),
-                      Text(
-                        viewModel.balanceLabel,
-                        style: AppTextStyles.paragraphLarge.copyWith(
-                          color: AppColors.balanceLabel,
-                        ),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.only(bottom: 24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              HomeTopBackground(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _HomeTopBar(viewModel: viewModel),
+                    const SizedBox(height: 26),
+                    Text(
+                      viewModel.balanceLabel,
+                      style: AppTextStyles.paragraphLarge.copyWith(
+                        color: AppColors.balanceLabel,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
                       ),
-                      const SizedBox(height: 8),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            alignment: Alignment.centerLeft,
                             child: Text(
-                              viewModel.balance,
-                              style: AppTextStyles.balanceDisplay
-                                  .copyWith(color: AppColors.balanceText),
+                              viewModel.balanceVisible
+                                  ? viewModel.balance
+                                  : '••••••••',
+                              style: AppTextStyles.balanceDisplay.copyWith(
+                                  color: AppColors.background,
+                                  fontSize: 40,
+                                  fontWeight: FontWeight.w800),
                             ),
                           ),
-                          const SizedBox(width: 12),
-                          const _RoundIconButton(
-                            icon: Icons.remove_red_eye_outlined,
-                            size: 48,
+                        ),
+                        const SizedBox(width: 12),
+                        _RoundIconButton(
+                          icon: viewModel.balanceVisible
+                              ? Icons.visibility_outlined
+                              : Icons.visibility_off_outlined,
+                          size: 46,
+                          tooltip: viewModel.balanceVisible
+                              ? 'Hide balance'
+                              : 'Show balance',
+                          onTap: viewModel.toggleBalanceVisibility,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Text(
+                          viewModel.balanceVisible
+                              ? viewModel.profit
+                              : '••••••',
+                          style: AppTextStyles.paragraphMedium.copyWith(
+                            color: AppColors.profitText,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
                           ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Text(
-                            viewModel.profit,
-                            style: AppTextStyles.paragraphMedium.copyWith(
-                              color: AppColors.profitText,
+                        ),
+                        const SizedBox(width: 10),
+                        const Icon(
+                          Icons.arrow_drop_up_rounded,
+                          color: AppColors.primary,
+                          size: 20,
+                        ),
+                        Text(
+                          viewModel.profitPercent,
+                          style: AppTextStyles.paragraphMediumBold
+                              .copyWith(color: AppColors.primary, fontSize: 14),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 26),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: viewModel.quickActions
+                          .map(
+                            (action) => Expanded(
+                              child: _QuickActionCard(
+                                action: action,
+                                onTap: action.label == 'Transfer'
+                                    ? () => Navigator.of(context).push<void>(
+                                          MaterialPageRoute(
+                                              builder: (_) =>
+                                                  const TransferView()),
+                                        )
+                                    : null,
+                              ),
                             ),
+                          )
+                          .toList(),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const HomeServicesSection(),
+                    const SizedBox(height: 24),
+                    const _SectionHeader(
+                      title: 'Popular Crypto',
+                      actionLabel: 'See all',
+                    ),
+                    const SizedBox(height: 18),
+                    Row(
+                      children: List.generate(viewModel.cryptoShortcuts.length,
+                          (index) {
+                        final shortcut = viewModel.cryptoShortcuts[index];
+                        return Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              right:
+                                  index == viewModel.cryptoShortcuts.length - 1
+                                      ? 0
+                                      : 10,
+                            ),
+                            child: _CryptoShortcutItem(shortcut: shortcut),
                           ),
-                          const SizedBox(width: 10),
-                          const Icon(
-                            Icons.arrow_drop_up_rounded,
-                            color: AppColors.primary,
-                            size: 20,
-                          ),
-                          Text(
-                            viewModel.profitPercent,
-                            style: AppTextStyles.paragraphMediumBold
-                                .copyWith(color: AppColors.primary),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 28),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: viewModel.quickActions
-                            .map(
-                              (action) => Expanded(
-                                child: _QuickActionCard(
-                                  action: action,
-                                  onTap: action.label == 'Transfer'
-                                      ? () => Navigator.of(context).push<void>(
-                                            MaterialPageRoute(
-                                                builder: (_) =>
-                                                    const TransferView()),
-                                          )
-                                      : null,
+                        );
+                      }),
+                    ),
+                    const SizedBox(height: 26),
+                    PopularCardsSection(
+                      cards: viewModel.popularCards,
+                      onSeeAll: onSeeAllCards ??
+                          () => Navigator.of(context).push<void>(
+                                MaterialPageRoute(
+                                  builder: (_) => const GiftcardView(),
                                 ),
                               ),
-                            )
-                            .toList(),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 30, 16, 0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const _SectionHeader(
-                        title: 'Popular Crypto',
-                        actionLabel: 'See all',
-                      ),
-                      const SizedBox(height: 18),
-                      Row(
-                        children: List.generate(
-                            viewModel.cryptoShortcuts.length, (index) {
-                          final shortcut = viewModel.cryptoShortcuts[index];
-                          return Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                right: index ==
-                                        viewModel.cryptoShortcuts.length - 1
-                                    ? 0
-                                    : 10,
-                              ),
-                              child: _CryptoShortcutItem(shortcut: shortcut),
-                            ),
-                          );
-                        }),
-                      ),
-                      const SizedBox(height: 30),
-                      PopularCardsSection(cards: viewModel.popularCards),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -237,12 +258,14 @@ class _RoundIconButton extends StatelessWidget {
     required this.size,
     this.showDot = false,
     this.onTap,
+    this.tooltip,
   });
 
   final IconData icon;
   final double size;
   final bool showDot;
   final VoidCallback? onTap;
+  final String? tooltip;
 
   @override
   Widget build(BuildContext context) {
@@ -256,13 +279,14 @@ class _RoundIconButton extends StatelessWidget {
             color: AppColors.white.withValues(alpha: 0.78),
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
-              color: AppColors.lightIconBorder,
+              color: AppColors.headingOnLight.withValues(alpha: 0.04),
             ),
           ),
           child: IconButton(
             onPressed: onTap,
             icon: Icon(icon, color: AppColors.iconOnLight, size: size * 0.42),
-            tooltip: icon == Icons.receipt_long_rounded ? 'Receipts' : null,
+            tooltip: tooltip ??
+                (icon == Icons.receipt_long_rounded ? 'Receipts' : null),
           ),
         ),
         if (showDot)
@@ -304,7 +328,7 @@ class _QuickActionCard extends StatelessWidget {
               shape: BoxShape.circle,
               color: action.highlighted
                   ? AppColors.primary
-                  : AppColors.actionSurface,
+                  : AppColors.navigationSurface,
             ),
             child: Icon(
               action.icon,
@@ -318,8 +342,10 @@ class _QuickActionCard extends StatelessWidget {
           Text(
             action.label,
             textAlign: TextAlign.center,
-            style: AppTextStyles.quickActionLabel
-                .copyWith(color: AppColors.actionText),
+            style: AppTextStyles.quickActionLabel.copyWith(
+                color: AppColors.actionText,
+                fontSize: 13,
+                fontWeight: FontWeight.w500),
           ),
         ],
       ),
@@ -336,8 +362,8 @@ class _SectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style:
-          AppTextStyles.sectionHeading.copyWith(color: AppColors.textPrimary),
+      style: AppTextStyles.sectionHeading.copyWith(
+          color: AppColors.white, fontSize: 17, fontWeight: FontWeight.w600),
     );
   }
 }
@@ -359,7 +385,7 @@ class _SectionHeader extends StatelessWidget {
         Text(
           actionLabel,
           style: AppTextStyles.paragraphSmallBold
-              .copyWith(color: AppColors.primary),
+              .copyWith(color: AppColors.primary, fontSize: 12),
         ),
       ],
     );
@@ -392,8 +418,10 @@ class _CryptoShortcutItem extends StatelessWidget {
           textAlign: TextAlign.center,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.paragraphSmall
-              .copyWith(color: AppColors.textPrimary),
+          style: AppTextStyles.paragraphSmall.copyWith(
+              color: AppColors.textPrimary,
+              fontSize: 13,
+              fontWeight: FontWeight.w500),
         ),
       ],
     );
