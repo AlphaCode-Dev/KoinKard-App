@@ -68,6 +68,9 @@ class AppColors {
   static const Color balanceLabel = Color(0xFF65676B);
   static const Color greetingText = Color(0xFF6E6E73);
   static const Color lightIconBorder = Color(0xFFDCDDE1);
+  static const Color nigeriaGreen = Color(0xFF008753);
+  static const Color homeHeaderSurface = Color(0xFFFAFAFA);
+  static const Color homeHeaderStripe = Color(0xFFECECEC);
   static const Color fundingAccent = Color(0xFF00A86B);
   static const Color airtimeAccent = Color(0xFF5D7CFF);
   static const Color electricityAccent = Color(0xFFFFA126);

@@ -1,4 +1,12 @@
 class AppAssets {
+  static const String nineMobile = 'assets/png/9mobile.jpg';
+  static const String electricity = 'assets/png/Thunder Bulb Poster.jpg';
+  static const String television = 'assets/png/TV Guide app icon.jpg';
+  static const String mtn =
+      'assets/png/MTN Logo PNG Vector (EPS) Free Download.jpg';
+  static const String airtel =
+      "assets/png/Airtel Nigeria, We've got you covered!.jpg";
+  static const String glo = 'assets/png/download (6).jpg';
   static const String homePayBills = 'assets/png/home_pay_bills.jpg';
   static const String homeVirtualCard = 'assets/png/home_virtual_card.jpg';
   static const String homeRmbPayment = 'assets/png/home_rmb_payment.jpg';
