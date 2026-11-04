@@ -7,17 +7,19 @@ class VirtualCardActions extends StatelessWidget {
       required this.onSend,
       required this.onReceive,
       required this.onAdd,
-      required this.onClose});
+      required this.onClose,
+      this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 16)});
 
   final VoidCallback onSend;
   final VoidCallback onReceive;
   final VoidCallback onAdd;
   final VoidCallback onClose;
+  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      padding: padding,
       child: Row(children: [
         Expanded(
             child: _Action(
@@ -42,10 +44,9 @@ class VirtualCardActions extends StatelessWidget {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16)),
               icon: const Icon(Icons.more_horiz,
-                  color: AppColors.white, size: 22),
+                  color: AppColors.darkText, size: 22),
               style: IconButton.styleFrom(
-                  side: BorderSide(
-                      color: AppColors.white.withValues(alpha: 0.20)),
+                  side: BorderSide(color: AppColors.lightIconBorder),
                   shape: const CircleBorder()),
               onSelected: (_) => onClose(),
               itemBuilder: (_) => const [
@@ -70,10 +71,10 @@ class _Action extends StatelessWidget {
         child: OutlinedButton(
           onPressed: onTap,
           style: OutlinedButton.styleFrom(
-            foregroundColor: AppColors.white,
+            foregroundColor: AppColors.darkText,
             padding: const EdgeInsets.symmetric(horizontal: 8),
             minimumSize: Size.zero,
-            side: BorderSide(color: AppColors.white.withValues(alpha: 0.20)),
+            side: const BorderSide(color: AppColors.lightIconBorder),
             shape: const StadiumBorder(),
           ),
           child: FittedBox(
@@ -84,8 +85,7 @@ class _Action extends StatelessWidget {
                     height: 22,
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        border: Border.all(
-                            color: AppColors.white.withValues(alpha: 0.30))),
+                        border: Border.all(color: AppColors.lightIconBorder)),
                     child: Icon(icon, size: 14)),
                 const SizedBox(width: 6),
                 Text(label,

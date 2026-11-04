@@ -1,4 +1,7 @@
 class AppAssets {
+  static const String virtualCardVisa = 'assets/png/virtual_card_visa.jpg';
+  static const String virtualCardContactless =
+      'assets/png/virtual_card_contactless.jpg';
   static const String nineMobile = 'assets/png/9mobile.jpg';
   static const String electricity = 'assets/png/Thunder Bulb Poster.jpg';
   static const String television = 'assets/png/TV Guide app icon.jpg';

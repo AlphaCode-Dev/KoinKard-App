@@ -5,7 +5,10 @@ import 'package:stacked/stacked.dart';
 
 import 'virtual_card_viewmodel.dart';
 import 'widgets/virtual_card_actions.dart';
+import 'widgets/virtual_card_overview.dart';
+import 'widgets/virtual_card_benefits_carousel.dart';
 import '../transfer/transfer_view.dart';
+import '../home/widgets/home_top_background.dart';
 
 class VirtualCardView extends StackedView<VirtualCardViewModel> {
   const VirtualCardView({super.key});
@@ -27,35 +30,33 @@ class VirtualCardView extends StackedView<VirtualCardViewModel> {
       child: Scaffold(
         backgroundColor: AppColors.kcDarkGreyColor,
         body: Column(children: [
-          const Expanded(
+          Expanded(
             flex: 11,
-            child: DecoratedBox(
+            child: HomeTopBackground(
               key: ValueKey('virtual-card-upper-panel'),
-              decoration: BoxDecoration(
-                  color: AppColors.white,
-                  borderRadius:
-                      BorderRadius.vertical(bottom: Radius.circular(30))),
-              child: SizedBox.expand(),
+              padding: EdgeInsets.zero,
+              borderRadius:
+                  const BorderRadius.vertical(bottom: Radius.circular(30)),
+              child: VirtualCardOverview(
+                model: viewModel,
+                actions: VirtualCardActions(
+                  padding: EdgeInsets.zero,
+                  onSend: () => Navigator.of(context).push<void>(
+                      MaterialPageRoute(builder: (_) => const TransferView())),
+                  onReceive: () => _showFundingNotice(context),
+                  onAdd: () => _showFundingNotice(context),
+                  onClose: () => Navigator.of(context).maybePop(),
+                ),
+              ),
             ),
           ),
-          SafeArea(
-              top: false,
-              bottom: false,
-              child: VirtualCardActions(
-                onSend: () => Navigator.of(context).push<void>(
-                    MaterialPageRoute(builder: (_) => const TransferView())),
-                onReceive: () => _showFundingNotice(context),
-                onAdd: () => _showFundingNotice(context),
-                onClose: () => Navigator.of(context).maybePop(),
-              )),
+          const VirtualCardBenefitsCarousel(),
           const Expanded(
             flex: 10,
-            child: DecoratedBox(
+            child: HomeTopBackground(
               key: ValueKey('virtual-card-lower-panel'),
-              decoration: BoxDecoration(
-                  color: AppColors.white,
-                  borderRadius:
-                      BorderRadius.vertical(top: Radius.circular(30))),
+              padding: EdgeInsets.zero,
+              borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
               child: SizedBox.expand(),
             ),
           ),
