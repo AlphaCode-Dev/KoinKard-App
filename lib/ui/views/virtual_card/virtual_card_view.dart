@@ -7,7 +7,8 @@ import 'virtual_card_viewmodel.dart';
 import 'widgets/virtual_card_actions.dart';
 import 'widgets/virtual_card_overview.dart';
 import 'widgets/virtual_card_benefits_carousel.dart';
-import '../transfer/transfer_view.dart';
+import 'widgets/virtual_card_settings.dart';
+import 'widgets/card_password_sheet.dart';
 import '../home/widgets/home_top_background.dart';
 
 class VirtualCardView extends StackedView<VirtualCardViewModel> {
@@ -41,23 +42,26 @@ class VirtualCardView extends StackedView<VirtualCardViewModel> {
                 model: viewModel,
                 actions: VirtualCardActions(
                   padding: EdgeInsets.zero,
-                  onSend: () => Navigator.of(context).push<void>(
-                      MaterialPageRoute(builder: (_) => const TransferView())),
-                  onReceive: () => _showFundingNotice(context),
-                  onAdd: () => _showFundingNotice(context),
-                  onClose: () => Navigator.of(context).maybePop(),
+                  onDetails: () =>
+                      _protectedAction(context, viewModel, terminating: false),
+                  onTransactions: () => _showTransactions(context),
+                  onTerminate: () =>
+                      _protectedAction(context, viewModel, terminating: true),
                 ),
               ),
             ),
           ),
-          const VirtualCardBenefitsCarousel(),
-          const Expanded(
+          const VirtualCardBenefitsCarousel(
+            key: ValueKey('virtual-card-benefits-loop'),
+          ),
+          Expanded(
             flex: 10,
             child: HomeTopBackground(
               key: ValueKey('virtual-card-lower-panel'),
               padding: EdgeInsets.zero,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
-              child: SizedBox.expand(),
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(30)),
+              child: VirtualCardSettings(model: viewModel),
             ),
           ),
         ]),
@@ -71,9 +75,72 @@ class VirtualCardView extends StackedView<VirtualCardViewModel> {
   ) =>
       VirtualCardViewModel();
 
-  void _showFundingNotice(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text('Virtual card funding is not available yet.'),
-    ));
+  Future<void> _protectedAction(
+      BuildContext context, VirtualCardViewModel model,
+      {required bool terminating}) async {
+    final verified = await showModalBottomSheet<bool>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: AppColors.homeHeaderSurface,
+      showDragHandle: true,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
+      builder: (_) => CardPasswordSheet(model: model, terminating: terminating),
+    );
+    if (verified != true || !context.mounted) return;
+    if (terminating) {
+      final confirm = await showDialog<bool>(
+          context: context,
+          builder: (dialogContext) => AlertDialog(
+                backgroundColor: AppColors.white,
+                title: const Text('Terminate this card?',
+                    style: TextStyle(color: AppColors.darkText)),
+                content: const Text(
+                    'Terminating an issued card permanently closes it. This cannot be undone.',
+                    style: TextStyle(color: AppColors.balanceLabel)),
+                actions: [
+                  TextButton(
+                      onPressed: () => Navigator.of(dialogContext).pop(false),
+                      child: const Text('Cancel')),
+                  FilledButton(
+                      style: FilledButton.styleFrom(
+                          backgroundColor: AppColors.destructive),
+                      onPressed: () => Navigator.of(dialogContext).pop(true),
+                      child: const Text('Terminate card')),
+                ],
+              ));
+      if (confirm != true || !context.mounted) return;
+    }
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(terminating
+            ? 'Card termination is not available yet.'
+            : 'Issued card details are not available yet.')));
+  }
+
+  void _showTransactions(BuildContext context) {
+    showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: AppColors.homeHeaderSurface,
+      showDragHandle: true,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
+      builder: (_) => const SafeArea(
+          child: Padding(
+        padding: EdgeInsets.fromLTRB(24, 0, 24, 28),
+        child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Transactions',
+                  style: TextStyle(
+                      color: AppColors.darkText,
+                      fontSize: 21,
+                      fontWeight: FontWeight.w700)),
+              SizedBox(height: 16),
+              Text('Your card transactions will appear here.',
+                  style: TextStyle(color: AppColors.balanceLabel)),
+            ]),
+      )),
+    );
   }
 }

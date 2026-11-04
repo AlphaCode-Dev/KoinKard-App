@@ -4,58 +4,37 @@ import 'package:koinkard/common/app_colors.dart';
 class VirtualCardActions extends StatelessWidget {
   const VirtualCardActions(
       {super.key,
-      required this.onSend,
-      required this.onReceive,
-      required this.onAdd,
-      required this.onClose,
+      required this.onDetails,
+      required this.onTransactions,
+      required this.onTerminate,
       this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 16)});
-
-  final VoidCallback onSend;
-  final VoidCallback onReceive;
-  final VoidCallback onAdd;
-  final VoidCallback onClose;
+  final VoidCallback onDetails;
+  final VoidCallback onTransactions;
+  final VoidCallback onTerminate;
   final EdgeInsetsGeometry padding;
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
+  Widget build(BuildContext context) => Padding(
       padding: padding,
       child: Row(children: [
         Expanded(
             child: _Action(
-                label: 'Send', icon: Icons.send_outlined, onTap: onSend)),
+                label: 'Card details',
+                icon: Icons.credit_card_outlined,
+                onTap: onDetails)),
         const SizedBox(width: 8),
         Expanded(
             child: _Action(
-                label: 'Receive', icon: Icons.south_rounded, onTap: onReceive)),
+                label: 'Transactions',
+                icon: Icons.receipt_long_outlined,
+                onTap: onTransactions)),
         const SizedBox(width: 8),
         Expanded(
-            child:
-                _Action(label: 'Add', icon: Icons.add_rounded, onTap: onAdd)),
-        const SizedBox(width: 8),
-        SizedBox(
-            width: 40,
-            height: 40,
-            child: PopupMenuButton<String>(
-              tooltip: 'More options',
-              padding: EdgeInsets.zero,
-              color: AppColors.white,
-              surfaceTintColor: AppColors.transparent,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16)),
-              icon: const Icon(Icons.more_horiz,
-                  color: AppColors.darkText, size: 22),
-              style: IconButton.styleFrom(
-                  side: BorderSide(color: AppColors.lightIconBorder),
-                  shape: const CircleBorder()),
-              onSelected: (_) => onClose(),
-              itemBuilder: (_) => const [
-                PopupMenuItem(value: 'close', child: Text('Back to Home'))
-              ],
-            )),
-      ]),
-    );
-  }
+            child: _Action(
+                label: 'Terminate card',
+                icon: Icons.delete_outline_rounded,
+                onTap: onTerminate)),
+      ]));
 }
 
 class _Action extends StatelessWidget {
@@ -65,33 +44,30 @@ class _Action extends StatelessWidget {
   final VoidCallback onTap;
 
   @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-        height: 40,
-        child: OutlinedButton(
-          onPressed: onTap,
-          style: OutlinedButton.styleFrom(
+  Widget build(BuildContext context) => SizedBox(
+      height: 40,
+      child: OutlinedButton(
+        onPressed: onTap,
+        style: OutlinedButton.styleFrom(
             foregroundColor: AppColors.darkText,
             padding: const EdgeInsets.symmetric(horizontal: 8),
             minimumSize: Size.zero,
             side: const BorderSide(color: AppColors.lightIconBorder),
-            shape: const StadiumBorder(),
-          ),
-          child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Row(mainAxisSize: MainAxisSize.min, children: [
-                Container(
-                    width: 22,
-                    height: 22,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(color: AppColors.lightIconBorder)),
-                    child: Icon(icon, size: 14)),
-                const SizedBox(width: 6),
-                Text(label,
-                    style: const TextStyle(
-                        fontSize: 12, fontWeight: FontWeight.w500)),
-              ])),
-        ));
-  }
+            shape: const StadiumBorder()),
+        child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Row(mainAxisSize: MainAxisSize.min, children: [
+              Container(
+                  width: 22,
+                  height: 22,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: AppColors.lightIconBorder)),
+                  child: Icon(icon, size: 14)),
+              const SizedBox(width: 6),
+              Text(label,
+                  style: const TextStyle(
+                      fontSize: 12, fontWeight: FontWeight.w500)),
+            ])),
+      ));
 }

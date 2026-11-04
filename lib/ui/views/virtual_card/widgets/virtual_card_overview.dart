@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:koinkard/common/app_colors.dart';
+import 'virtual_card_header.dart';
 import '../virtual_card_viewmodel.dart';
 import 'virtual_card_face.dart';
 
@@ -27,29 +27,7 @@ class VirtualCardOverview extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(children: [
-                                const Expanded(
-                                    child: Text('Virtual Card',
-                                        style: TextStyle(
-                                            color: AppColors.darkText,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w700,
-                                            letterSpacing: -0.5))),
-                                Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 5),
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: AppColors.lightIconBorder),
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    child: const Text('PREVIEW',
-                                        style: TextStyle(
-                                            color: AppColors.balanceLabel,
-                                            fontSize: 9,
-                                            fontWeight: FontWeight.w600,
-                                            letterSpacing: 1.4))),
-                              ]),
+                              const VirtualCardHeader(),
                               const SizedBox(height: 20),
                               VirtualCardFace(
                                   number: model.maskedNumber,
