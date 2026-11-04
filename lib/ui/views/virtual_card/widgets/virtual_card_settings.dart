@@ -10,35 +10,38 @@ class VirtualCardSettings extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         top: false,
-        child: ListView(
+        child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 16),
-          children: [
-            SwitchListTile.adaptive(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 8),
-              title: const Text('Unfreeze card',
-                  style: TextStyle(color: AppColors.darkText, fontSize: 16)),
-              value: model.cardUnfrozen,
-              activeTrackColor: AppColors.primary,
-              activeThumbColor: AppColors.white,
-              inactiveTrackColor: AppColors.lightIconBorder,
-              onChanged: model.setCardUnfrozen,
-            ),
-            const Divider(height: 1, color: AppColors.rateTileBorder),
-            _SettingRow(
-                title: 'Card limits',
-                onTap: () => _showDetails(context, 'Card limits',
-                    'Your card limits will appear here when your virtual card is issued.')),
-            const Divider(height: 1, color: AppColors.rateTileBorder),
-            _SettingRow(
-                title: 'Linked balances',
-                onTap: () => _showDetails(context, 'Linked balances',
-                    'You have no balances linked to this virtual card yet.')),
-            const Divider(height: 1, color: AppColors.rateTileBorder),
-            _SettingRow(
-                title: 'View billing address',
-                onTap: () => _showDetails(context, 'Billing address',
-                    'Your billing address will appear here when your virtual card is issued.')),
-          ],
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SwitchListTile.adaptive(
+                contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                title: const Text('Unfreeze card',
+                    style: TextStyle(color: AppColors.darkText, fontSize: 16)),
+                value: model.cardUnfrozen,
+                activeTrackColor: AppColors.primary,
+                activeThumbColor: AppColors.white,
+                inactiveTrackColor: AppColors.lightIconBorder,
+                onChanged: model.setCardUnfrozen,
+              ),
+              const Divider(height: 1, color: AppColors.rateTileBorder),
+              _SettingRow(
+                  title: 'Card limits',
+                  onTap: () => _showDetails(context, 'Card limits',
+                      'Your card limits will appear here when your virtual card is issued.')),
+              const Divider(height: 1, color: AppColors.rateTileBorder),
+              _SettingRow(
+                  title: 'Linked balances',
+                  onTap: () => _showDetails(context, 'Linked balances',
+                      'You have no balances linked to this virtual card yet.')),
+              const Divider(height: 1, color: AppColors.rateTileBorder),
+              _SettingRow(
+                  title: 'View billing address',
+                  onTap: () => _showDetails(context, 'Billing address',
+                      'Your billing address will appear here when your virtual card is issued.')),
+            ],
+          ),
         ));
   }
 

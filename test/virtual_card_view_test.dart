@@ -107,8 +107,18 @@ void main() {
     expect(tester.takeException(), isNull);
     final smallCard = tester.getBottomRight(find.byType(VirtualCardFace)) -
         tester.getTopLeft(find.byType(VirtualCardFace));
-    expect(smallCard.dx, closeTo(122.4, 0.2));
-    expect(smallCard.dy, closeTo(77.3, 0.2));
+    expect(smallCard.dx, closeTo(276, 0.2));
+    expect(smallCard.dy, closeTo(276 / 1.586, 0.2));
+    await tester.scrollUntilVisible(find.text('View billing address'), 150,
+        scrollable: find
+            .descendant(
+                of: find.byType(CustomScrollView),
+                matching: find.byType(Scrollable))
+            .first);
+    await tester.pumpAndSettle();
+    expect(find.text('View billing address').hitTestable(), findsOneWidget);
+    await tester.ensureVisible(find.byTooltip('Back'));
+    await tester.pumpAndSettle();
     await tester.tap(find.byTooltip('Back'));
     await tester.pumpAndSettle();
     expect(find.byType(VirtualCardView), findsNothing);

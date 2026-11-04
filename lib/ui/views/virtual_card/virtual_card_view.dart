@@ -30,9 +30,8 @@ class VirtualCardView extends StackedView<VirtualCardViewModel> {
       ),
       child: Scaffold(
         backgroundColor: AppColors.kcDarkGreyColor,
-        body: Column(children: [
-          Expanded(
-            flex: 11,
+        body: CustomScrollView(slivers: [
+          SliverToBoxAdapter(
             child: HomeTopBackground(
               key: ValueKey('virtual-card-upper-panel'),
               padding: EdgeInsets.zero,
@@ -51,11 +50,13 @@ class VirtualCardView extends StackedView<VirtualCardViewModel> {
               ),
             ),
           ),
-          const VirtualCardBenefitsCarousel(
-            key: ValueKey('virtual-card-benefits-loop'),
+          const SliverToBoxAdapter(
+            child: VirtualCardBenefitsCarousel(
+              key: ValueKey('virtual-card-benefits-loop'),
+            ),
           ),
-          Expanded(
-            flex: 10,
+          SliverFillRemaining(
+            hasScrollBody: false,
             child: HomeTopBackground(
               key: ValueKey('virtual-card-lower-panel'),
               padding: EdgeInsets.zero,
